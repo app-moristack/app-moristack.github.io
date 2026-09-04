@@ -1,11 +1,12 @@
 import { Seo } from '@/components/Seo'
 import { Container, Eyebrow } from '@/components/ui/Section'
 import { siteConfig } from '@/data/site.config'
+import { providerDisplayName } from '@/lib/formProvider'
 
 const LAST_UPDATED = 'September 2026'
 
 export default function PrivacyPage() {
-  const provider = siteConfig.contactFormEndpoint ? 'Formspree' : 'an external form provider'
+  const provider = providerDisplayName(siteConfig.contactFormEndpoint)
 
   return (
     <>

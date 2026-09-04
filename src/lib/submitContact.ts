@@ -1,4 +1,11 @@
 import type { ContactFormValues } from './contactSchema'
+import {
+  buildPayload,
+  buildRequest,
+  detectProvider,
+  isDelivered,
+  providerMessage,
+} from './formProvider'
 import { siteConfig } from '@/data/site.config'
 
 export type SubmitOutcome =
@@ -14,6 +21,14 @@ export const MIN_FILL_SECONDS = 4
 
 export function fingerprint(values: ContactFormValues) {
   return [values.email, values.projectType, values.message].join('|').toLowerCase()
+}
+
+async function readJson(response: Response): Promise<unknown> {
+  try {
+    return await response.json()
+  } catch {
+    return null
+  }
 }
 
 export async function submitContact(
@@ -33,19 +48,23 @@ export async function submitContact(
   const endpoint = siteConfig.contactFormEndpoint
   if (!endpoint) return { kind: 'no-endpoint' }
 
-  const { company_website: _honeypot, ...payload } = values
+  const provider = detectProvider(endpoint)
+
+  // Without a key Web3Forms rejects every submission, so say so rather than
+  // letting the visitor believe their enquiry was delivered.
+  if (provider === 'web3forms' && !siteConfig.contactFormAccessKey) {
+    return { kind: 'no-endpoint' }
+  }
 
   try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        ...payload,
-        _subject: `New enquiry from ${values.fullName} (${values.projectType})`,
-      }),
-    })
+    const payload = buildPayload(values, provider, siteConfig.contactFormAccessKey)
+    const { body, headers } = buildRequest(payload, provider)
 
-    if (response.ok) return { kind: 'success' }
+    const response = await fetch(endpoint, { method: 'POST', headers, body })
+
+    const result = await readJson(response)
+
+    if (isDelivered(response.status, result)) return { kind: 'success' }
 
     if (response.status === 429) {
       return {
@@ -54,9 +73,12 @@ export async function submitContact(
       }
     }
 
+    const detail = providerMessage(result)
     return {
       kind: 'error',
-      message: `The form service returned an error (${response.status}). Your details have been kept below.`,
+      message: detail
+        ? `The form service rejected the enquiry: ${detail}`
+        : `The form service returned an error (${response.status}). Your details have been kept below.`,
     }
   } catch {
     return {

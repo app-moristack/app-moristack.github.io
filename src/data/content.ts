@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   Smartphone,
   Sparkles,
+  TabletSmartphone,
   TestTube2,
   Wallet,
   Wrench,
@@ -218,6 +219,16 @@ export const technologies: readonly Technology[] = [
     icon: Server,
     body: 'A dependable backend for client applications that need accounts, data and business rules.',
   },
+  {
+    name: 'Flutter',
+    icon: TabletSmartphone,
+    body: 'One codebase for Android and iOS, so a mobile app costs less than building it twice.',
+  },
+  {
+    name: 'MySQL',
+    icon: Database,
+    body: 'A proven database that keeps your records consistent and your reports quick as data grows.',
+  },
 ]
 
 export const technologyBenefits: readonly string[] = [
@@ -226,6 +237,7 @@ export const technologyBenefits: readonly string[] = [
   'Maintainable applications that survive a change of requirement',
   'Scalable architecture as your data and team grow',
   'Modern interactive design that still loads quickly',
+  'Mobile apps for Android and iOS from a single codebase',
 ]
 
 export type AboutPoint = {

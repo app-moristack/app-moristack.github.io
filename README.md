@@ -39,32 +39,57 @@ npm run dev               # http://localhost:5173
 Every variable is compiled into the public JavaScript bundle. **Only ever put public
 values in a `VITE_*` variable** — anything here is visible to anyone who views the site.
 
-| Variable                     | Required | Purpose                                                                                        |
-| ---------------------------- | -------- | ---------------------------------------------------------------------------------------------- |
-| `VITE_BASE_PATH`             | no       | Deployment base. `/` for a custom domain, `/<repo-name>/` for a project page. Defaults to `/`. |
-| `VITE_SITE_URL`              | no       | Absolute origin used for canonical URLs and social share tags.                                 |
-| `VITE_CONTACT_FORM_ENDPOINT` | no       | Public Formspree endpoint. Without it the form shows an email fallback.                        |
-| `VITE_WHATSAPP_NUMBER`       | no       | Digits only, e.g. `2305xxxxxxx`. Enables WhatsApp links when set.                              |
-| `VITE_PHONE`                 | no       | Public phone number, international format. Enables phone links when set.                       |
+| Variable                       | Required | Purpose                                                                                        |
+| ------------------------------ | -------- | ---------------------------------------------------------------------------------------------- |
+| `VITE_BASE_PATH`               | no       | Deployment base. `/` for a custom domain, `/<repo-name>/` for a project page. Defaults to `/`. |
+| `VITE_SITE_URL`                | no       | Absolute origin used for canonical URLs and social share tags.                                 |
+| `VITE_CONTACT_FORM_ACCESS_KEY` | no       | Web3Forms access key. Overrides the committed default; public by design.                       |
+| `VITE_CONTACT_FORM_ENDPOINT`   | no       | Only to use another provider. Defaults to the Web3Forms endpoint.                              |
+| `VITE_WHATSAPP_NUMBER`         | no       | Digits only, e.g. `2305xxxxxxx`. Enables WhatsApp links when set.                              |
+| `VITE_PHONE`                   | no       | Public phone number, international format. Enables phone links when set.                       |
 
 Copy `.env.example` to `.env` for local development. `.env` is gitignored — never commit it.
 
-## Contact form (Formspree)
+## Contact form (Web3Forms)
 
-The site has no backend, so the quote form posts to Formspree.
+The site has no backend, so the quote form posts to [Web3Forms](https://web3forms.com):
+free, 250 submissions/month, no credit card. An access key is already committed as the
+default, so the form works out of the box.
 
-1. Create an account at [formspree.io](https://formspree.io) and add a new form.
-2. Point its notification email at `moristack@gmail.com`.
-3. Copy the form's endpoint — it looks like `https://formspree.io/f/abcdwxyz`.
-4. For local use, put it in `.env`:
-   ```
-   VITE_CONTACT_FORM_ENDPOINT=https://formspree.io/f/abcdwxyz
-   ```
-5. For deploys, add it as a **repository variable** (not a secret — it is public anyway):
-   GitHub → Settings → Secrets and variables → Actions → **Variables** → New variable,
-   named `VITE_CONTACT_FORM_ENDPOINT`.
+**To use a different key** (for example after rotating it), get a new one by entering
+your email at [web3forms.com](https://web3forms.com) and either put it in `.env` for
+local work:
 
-**Until the endpoint is set**, the form validates normally and then tells the visitor
+```
+VITE_CONTACT_FORM_ACCESS_KEY=your-key-here
+```
+
+or add it as a **repository variable** for deploys: GitHub → Settings → Secrets and
+variables → Actions → **Variables** → `VITE_CONTACT_FORM_ACCESS_KEY`. A variable, not
+a secret — Web3Forms states the key is public and safe in client-side code, and every
+`VITE_*` value ends up in the bundle regardless.
+
+**To use another provider** (Formspree, FormSubmit, something self-hosted), set
+`VITE_CONTACT_FORM_ENDPOINT` to its URL. `src/lib/formProvider.ts` detects the provider
+from the URL and adapts the request; anything unrecognised is sent JSON and judged on
+its status code.
+
+### Two behaviours worth knowing about
+
+Both are covered by tests in `src/lib/formProvider.test.ts`, because both cause silent
+data loss if they regress:
+
+- **Web3Forms answers HTTP 200 with `success: false`** when it rejects a submission, so
+  a 2xx status is not proof of delivery. The response body is inspected as well.
+- **Web3Forms does not answer a CORS preflight.** Its request must stay a "simple" one:
+  `FormData` with no explicit `Content-Type`. Sending
+  `Content-Type: application/json` triggers a preflight and the browser blocks the
+  submission before it leaves the page.
+
+It also **rejects `localhost` as an origin**, so the form cannot be tested end to end
+from the dev server — it has to be exercised on the deployed site.
+
+**If the form is not configured**, it validates normally and then tells the visitor
 plainly that it is not connected, offering `moristack@gmail.com` instead. It never
 pretends a submission succeeded.
 
@@ -75,7 +100,7 @@ Spam and abuse handling, all client-side:
 - Duplicate-submission protection keyed on email, project type and message.
 
 Client-side validation catches mistakes and reduces spam. It is **not** a security
-control: anyone can post to the endpoint directly, so rely on Formspree's own spam
+control: anyone can post to the endpoint directly, so rely on the provider's own spam
 filtering and never treat submitted content as trusted.
 
 ## Deploying to GitHub Pages
@@ -94,7 +119,8 @@ then deploys `dist/`. A failing lint, type error or test blocks the deploy.
    ```
 3. Go to **Settings → Pages** and set **Source** to **GitHub Actions**.
 4. Add the form endpoint under **Settings → Secrets and variables → Actions →
-   Variables** as `VITE_CONTACT_FORM_ENDPOINT` (see the Formspree section above).
+   Variables** as `VITE_CONTACT_FORM_ACCESS_KEY` — optional, a working key is already
+   committed (see the contact form section above).
 5. Push to `main`, or run the workflow manually from the **Actions** tab.
 
 The site then appears at `https://<user>.github.io/<repo>/`.
@@ -255,7 +281,7 @@ src/
 - **Project screenshots are placeholders.** Cards show a "Screenshot coming soon"
   state until real images are added to `public/` and referenced from `projects.ts`.
 - **No response headers** on GitHub Pages, as noted above.
-- **Form delivery depends on Formspree**, a third party. Their free tier has a monthly
+- **Form delivery depends on Web3Forms**, a third party. Their free tier has a monthly
   submission limit, and submissions pass through their systems — which is why the
   privacy policy says so explicitly.
 
@@ -263,7 +289,7 @@ src/
 
 All are marked with `TODO` in `src/data/site.config.ts`:
 
-- [ ] Set `VITE_CONTACT_FORM_ENDPOINT` — **the form does not deliver anything until this is done.**
+- [x] Contact form connected to Web3Forms with a committed access key (250 submissions/month).
 - [ ] Add real social media URLs (currently `null`, so the links are hidden rather than broken).
 - [ ] Add `VITE_PHONE` and `VITE_WHATSAPP_NUMBER` if you want phone and WhatsApp links.
 - [ ] Set `VITE_SITE_URL` once the domain is decided — robots and sitemap follow it automatically.

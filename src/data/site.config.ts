@@ -1,3 +1,5 @@
+import { WEB3FORMS_ENDPOINT } from '@/lib/formProvider'
+
 export type SocialLink = {
   readonly label: string
   readonly url: string | null
@@ -19,11 +21,29 @@ export type SiteConfig = {
   readonly socials: readonly SocialLink[]
   readonly nav: readonly NavLink[]
   readonly contactFormEndpoint: string | null
+  readonly contactFormAccessKey: string | null
 }
 
 const rawEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT?.trim()
+const rawAccessKey = import.meta.env.VITE_CONTACT_FORM_ACCESS_KEY?.trim()
 const rawWhatsapp = import.meta.env.VITE_WHATSAPP_NUMBER?.trim()
 const rawPhone = import.meta.env.VITE_PHONE?.trim()
+
+/**
+ * Web3Forms access key. Public by design — Web3Forms states it is safe in
+ * client-side code, and every VITE_* value is compiled into the bundle anyway.
+ * Override or rotate it with the VITE_CONTACT_FORM_ACCESS_KEY repository
+ * variable; a new key is issued instantly at https://web3forms.com.
+ */
+const WEB3FORMS_ACCESS_KEY = 'af1e4023-5ce9-4dba-ac2b-d58dc5b3f547'
+
+const resolvedAccessKey = rawAccessKey || WEB3FORMS_ACCESS_KEY
+
+/**
+ * The endpoint defaults to Web3Forms, so the key alone is enough. Another
+ * provider is selected by setting VITE_CONTACT_FORM_ENDPOINT explicitly.
+ */
+const resolvedEndpoint = rawEndpoint || (resolvedAccessKey ? WEB3FORMS_ENDPOINT : '')
 
 export const siteConfig: SiteConfig = {
   businessName: 'MoriStack',
@@ -52,7 +72,8 @@ export const siteConfig: SiteConfig = {
     { label: 'About', to: '/about' },
     { label: 'Contact', to: '/contact' },
   ],
-  contactFormEndpoint: rawEndpoint || null,
+  contactFormEndpoint: resolvedEndpoint || null,
+  contactFormAccessKey: resolvedAccessKey || null,
 }
 
 export const activeSocials = siteConfig.socials.filter(

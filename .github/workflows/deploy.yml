@@ -50,6 +50,7 @@ jobs:
         env:
           VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
           VITE_SITE_URL: ${{ steps.pages.outputs.origin }}
+          VITE_CONTACT_FORM_ACCESS_KEY: ${{ vars.VITE_CONTACT_FORM_ACCESS_KEY }}
           VITE_CONTACT_FORM_ENDPOINT: ${{ vars.VITE_CONTACT_FORM_ENDPOINT }}
           VITE_WHATSAPP_NUMBER: ${{ vars.VITE_WHATSAPP_NUMBER }}
           VITE_PHONE: ${{ vars.VITE_PHONE }}

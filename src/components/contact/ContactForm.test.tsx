@@ -56,9 +56,13 @@ describe('ContactForm validation', () => {
 })
 
 describe('ContactForm submission', () => {
-  it('falls back to email when no endpoint is configured', async () => {
+  it('sends the enquiry to the configured provider and confirms it', async () => {
     const user = userEvent.setup()
-    const fetchSpy = vi.fn()
+    const fetchSpy = vi.fn().mockResolvedValue({
+      status: 200,
+      ok: true,
+      json: async () => ({ success: true }),
+    })
     vi.stubGlobal('fetch', fetchSpy)
 
     renderWithRouter(<ContactForm />)
@@ -66,10 +70,30 @@ describe('ContactForm submission', () => {
     pretendTheFormWasOpenedEarlier()
     await user.click(screen.getByRole('button', { name: /send my enquiry/i }))
 
+    expect(await screen.findByRole('status')).toHaveTextContent(/your enquiry has been sent/i)
+    expect(fetchSpy).toHaveBeenCalledTimes(1)
+    expect(screen.getByLabelText(/full name/i)).toHaveValue('')
+  })
+
+  it('shows the email fallback when the provider rejects the enquiry', async () => {
+    const user = userEvent.setup()
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        status: 403,
+        ok: false,
+        json: async () => ({ success: false, message: 'Invalid access key' }),
+      }),
+    )
+
+    renderWithRouter(<ContactForm />)
+    await fillValidEnquiry(user)
+    pretendTheFormWasOpenedEarlier()
+    await user.click(screen.getByRole('button', { name: /send my enquiry/i }))
+
     const alert = await screen.findByRole('alert')
-    expect(alert).toHaveTextContent(/not connected yet/i)
+    expect(alert).toHaveTextContent(/could not be sent/i)
     expect(alert).toHaveTextContent(/moristack@gmail.com/i)
-    expect(fetchSpy).not.toHaveBeenCalled()
   })
 
   it('preserves everything the visitor typed after a failure', async () => {
