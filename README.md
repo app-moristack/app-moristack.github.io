@@ -86,8 +86,20 @@ data loss if they regress:
   `Content-Type: application/json` triggers a preflight and the browser blocks the
   submission before it leaves the page.
 
-It also **rejects `localhost` as an origin**, so the form cannot be tested end to end
-from the dev server — it has to be exercised on the deployed site.
+### Why the form cannot be tested by automation
+
+`api.web3forms.com` sits behind **Cloudflare bot protection**. Automated and headless
+browsers get a `403` with a "Just a moment..." challenge page, and challenge pages carry
+no CORS headers — so in the browser console it surfaces as a misleading
+`No 'Access-Control-Allow-Origin' header` error rather than as the 403 it really is.
+
+Real visitors in a real browser are unaffected. But it does mean the delivery path
+cannot be covered by an end-to-end test: **verify the form by hand after changing it.**
+Everything up to the network call is unit-tested; only the final hop is manual.
+
+If genuine visitors ever report the same failure, switch provider by setting
+`VITE_CONTACT_FORM_ENDPOINT` — [FormSubmit](https://formsubmit.co) needs no signup and
+is not behind a challenge; the generic JSON path already supports it.
 
 **If the form is not configured**, it validates normally and then tells the visitor
 plainly that it is not connected, offering `moristack@gmail.com` instead. It never
