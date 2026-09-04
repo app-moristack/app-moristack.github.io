@@ -87,7 +87,7 @@ export function FormStatus({ outcome }: { readonly outcome: SubmitOutcome | null
     <div
       role={isSuccess ? 'status' : 'alert'}
       aria-live={isSuccess ? 'polite' : 'assertive'}
-      className={`mb-6 flex items-start gap-3 rounded-xl border p-4 text-sm leading-relaxed ${tone}`}
+      className={`mt-6 flex items-start gap-3 rounded-xl border p-4 text-sm leading-relaxed ${tone}`}
     >
       <Icon size={18} aria-hidden="true" className={`mt-0.5 shrink-0 ${iconTone}`} />
       <p>{content()}</p>

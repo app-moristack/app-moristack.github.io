@@ -14,10 +14,17 @@ export function ContactForm() {
   const [outcome, setOutcome] = useState<SubmitOutcome | null>(null)
   const startedAt = useRef(0)
   const lastSubmitted = useRef<string | null>(null)
+  const statusRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     startedAt.current = Date.now()
   }, [])
+
+  useEffect(() => {
+    if (outcome) {
+      statusRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  }, [outcome])
 
   const {
     register,
@@ -56,8 +63,6 @@ export function ContactForm() {
       <h2 id="contact-form-heading" className="sr-only">
         Request a quote
       </h2>
-
-      <FormStatus outcome={outcome} />
 
       <ContactFields register={register} errors={errors} />
 
@@ -112,6 +117,10 @@ export function ContactForm() {
           )}
         </Button>
         <p className="text-sm text-ink-500">{siteConfig.responseTime}</p>
+      </div>
+
+      <div ref={statusRef}>
+        <FormStatus outcome={outcome} />
       </div>
     </form>
   )
