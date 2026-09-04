@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# Update the host and path here and in sitemap.xml if you move to a custom domain.
-Sitemap: https://app-moristack.github.io/moristack/sitemap.xml

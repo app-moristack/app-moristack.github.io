@@ -119,7 +119,8 @@ CI and local builds use the same runtime.
    - **Subdomain** (`www.moristack.mu`) — one `CNAME` to `<user>.github.io`.
 3. Add a repository variable `VITE_SITE_URL` with the new origin, e.g.
    `https://moristack.mu`, so canonical and social URLs are correct.
-4. Update the hard-coded origin in `public/robots.txt` and `public/sitemap.xml`.
+4. Nothing else to edit — `robots.txt` and `sitemap.xml` are generated at build time
+   from `VITE_SITE_URL` and the base path by `scripts/generate-seo-files.mjs`.
 
 GitHub Pages writes a `CNAME` file into the branch when you save the custom domain.
 Because this repo deploys via an artifact rather than a branch, add `public/CNAME`
@@ -206,10 +207,11 @@ and inline `style` attributes used for logo sizing.
 .github/workflows/deploy.yml   Build, validate and deploy to GitHub Pages
 public/
   brand/                       Logo master plus generated icons and OG image
-  robots.txt  sitemap.xml  site.webmanifest
+  site.webmanifest             robots.txt / sitemap.xml are generated into dist/
 scripts/
   generate-icons.mjs           Derives all icons from the supplied logo
   spa-fallback.mjs             Copies index.html to 404.html after build
+  generate-seo-files.mjs       Writes robots.txt and sitemap.xml for the deploy URL
 src/
   components/
     contact/                   ContactForm, ContactFields, FormStatus
@@ -264,5 +266,5 @@ All are marked with `TODO` in `src/data/site.config.ts`:
 - [ ] Set `VITE_CONTACT_FORM_ENDPOINT` — **the form does not deliver anything until this is done.**
 - [ ] Add real social media URLs (currently `null`, so the links are hidden rather than broken).
 - [ ] Add `VITE_PHONE` and `VITE_WHATSAPP_NUMBER` if you want phone and WhatsApp links.
-- [ ] Set `VITE_SITE_URL` and update `robots.txt` / `sitemap.xml` once the domain is decided.
+- [ ] Set `VITE_SITE_URL` once the domain is decided — robots and sitemap follow it automatically.
 - [ ] Add real project screenshots and promote any real client work from `Concept` to `Client Project`.
