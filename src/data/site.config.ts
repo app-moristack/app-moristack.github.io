@@ -35,7 +35,7 @@ export const siteConfig: SiteConfig = {
   whatsappNumber: rawWhatsapp || null,
   location: 'Mauritius',
   // TODO: replace with the live domain once one is registered.
-  domain: import.meta.env.VITE_SITE_URL?.trim() || 'https://moristack.github.io',
+  domain: import.meta.env.VITE_SITE_URL?.trim() || 'https://app-moristack.github.io',
   basePath: import.meta.env.BASE_URL,
   responseTime: 'We reply to every enquiry within 1 business day.',
   socials: [
