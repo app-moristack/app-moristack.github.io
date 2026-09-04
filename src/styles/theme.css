@@ -1,0 +1,179 @@
+@import 'tailwindcss';
+
+/*
+ * MoriStack design tokens.
+ * Colours are sampled from the MoriStack logo: a midnight-navy disc holding a
+ * turquoise-to-cyan isometric "MS" monogram over a Le Morne Brabant silhouette,
+ * with a coral accent on the lower S face and a turquoise -> coral rim gradient.
+ */
+@theme {
+  --color-navy-950: #03111d;
+  --color-navy-900: #051b2c;
+  --color-navy-850: #06212f;
+  --color-navy-800: #0a2b3f;
+  --color-navy-700: #10405c;
+  --color-navy-600: #17567a;
+
+  --color-turquoise-400: #5cf2c9;
+  --color-turquoise-500: #22e5ae;
+  --color-turquoise-600: #12c091;
+
+  --color-cyan-400: #5fd4f7;
+  --color-cyan-500: #29bdf0;
+  --color-cyan-600: #128fc4;
+
+  --color-ocean-500: #2c7be5;
+  --color-ocean-600: #1c5cbd;
+
+  --color-coral-400: #ff8b6b;
+  --color-coral-500: #ff6b45;
+  --color-coral-600: #e14e2b;
+
+  --color-ink-50: #f2f8fc;
+  --color-ink-100: #e9f3fa;
+  --color-ink-300: #b7cddd;
+  --color-ink-400: #93afc4;
+  --color-ink-500: #6f8ba1;
+
+  --font-sans:
+    'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  --radius-card: 1.125rem;
+  --radius-panel: 1.5rem;
+
+  --shadow-glow-turquoise:
+    0 0 0 1px rgb(34 229 174 / 0.22), 0 18px 50px -20px rgb(34 229 174 / 0.45);
+  --shadow-glow-coral: 0 0 0 1px rgb(255 107 69 / 0.22), 0 18px 50px -20px rgb(255 107 69 / 0.4);
+  --shadow-panel: 0 24px 70px -32px rgb(0 0 0 / 0.9);
+  --shadow-lift: 0 20px 45px -24px rgb(3 17 29 / 0.85);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  :root {
+    --ms-surface: var(--color-navy-900);
+    --ms-surface-raised: color-mix(in oklab, var(--color-navy-800) 78%, transparent);
+    --ms-border: color-mix(in oklab, var(--color-cyan-400) 16%, transparent);
+    --ms-border-strong: color-mix(in oklab, var(--color-turquoise-500) 34%, transparent);
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--ms-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-navy-950);
+    color: var(--color-ink-100);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Never let a decorative layer create a horizontal scrollbar. */
+  #root {
+    isolation: isolate;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-turquoise-400);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-turquoise-500) 40%, transparent);
+    color: var(--color-ink-50);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .ms-panel {
+    background: linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--color-navy-800) 82%, transparent),
+      color-mix(in oklab, var(--color-navy-900) 88%, transparent)
+    );
+    border: 1px solid var(--ms-border);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(10px);
+  }
+
+  .ms-hairline {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-turquoise-500) 45%, transparent),
+      color-mix(in oklab, var(--color-coral-500) 35%, transparent),
+      transparent
+    );
+  }
+
+  /*
+   * Headline accent. Both stops are high-contrast on navy; the logo's coral is
+   * used for separate accents rather than inside body-size text, where the
+   * gradient's warm tail dropped below the AA contrast threshold.
+   */
+  .ms-gradient-text {
+    background: linear-gradient(100deg, var(--color-turquoise-400), var(--color-cyan-400) 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Native dropdowns inherit the OS palette, so the option list is set here. */
+  select option {
+    background-color: var(--color-navy-900);
+    color: var(--color-ink-100);
+  }
+
+  .ms-grid-backdrop {
+    background-image:
+      linear-gradient(
+        color-mix(in oklab, var(--color-cyan-400) 7%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--color-cyan-400) 7%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+}

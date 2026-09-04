@@ -1,0 +1,79 @@
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deployment finish rather than cancelling it half-way.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Test
+        run: npm run test
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build
+        # base_path is "/<repo>" for a project page and "/" for a user page or
+        # custom domain. vite.config.ts normalizes either form, so it is passed
+        # through verbatim and the repository name is never hard-coded.
+        run: npm run build
+        env:
+          VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          VITE_SITE_URL: ${{ steps.pages.outputs.origin }}
+          VITE_CONTACT_FORM_ENDPOINT: ${{ vars.VITE_CONTACT_FORM_ENDPOINT }}
+          VITE_WHATSAPP_NUMBER: ${{ vars.VITE_WHATSAPP_NUMBER }}
+          VITE_PHONE: ${{ vars.VITE_PHONE }}
+
+      - name: Verify build output
+        run: |
+          test -f dist/index.html || { echo "::error::dist/index.html missing"; exit 1; }
+          test -f dist/404.html   || { echo "::error::dist/404.html missing (SPA fallback)"; exit 1; }
+          test -f dist/brand/logo-mark.webp || { echo "::error::brand assets missing"; exit 1; }
+          if grep -q 'src="//' dist/index.html; then
+            echo "::error::doubled slash in an asset URL - check VITE_BASE_PATH"; exit 1
+          fi
+          echo "Build output verified."
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Update the host and path if you deploy to a custom domain.
+Sitemap: https://moristack.github.io/sitemap.xml
