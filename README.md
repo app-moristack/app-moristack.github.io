@@ -32,6 +32,7 @@ npm run dev               # http://localhost:5173
 | `npm run format:check`  | Prettier check                                          |
 | `npm run validate`      | `lint` + `typecheck` + `test`                           |
 | `npm run icons`         | Regenerate favicons and the OG image from the logo      |
+| `npm run analyze`       | Build and write a bundle treemap to `dist/stats.html`   |
 
 ## Environment variables
 
@@ -239,7 +240,8 @@ src/
 - The scene pauses when the browser tab is hidden and stops animating under
   `prefers-reduced-motion`.
 - Vendor code is split into `react`, `router`, `motion`, `forms` and `three` chunks.
-- `npm run build` writes a bundle treemap to `dist/stats.html`.
+- `npm run analyze` writes a bundle treemap to `dist/stats.html`. It is deliberately
+  opt-in: the treemap is around 1MB and must never be published with the site.
 
 ## Known limitations
 

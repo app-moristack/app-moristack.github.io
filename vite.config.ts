@@ -26,8 +26,11 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      visualizer({ filename: 'dist/stats.html', gzipSize: true, brotliSize: true }),
-    ],
+      // Opt-in only: the treemap is ~1MB and must not ship to the live site.
+      // Generate it with `npm run analyze`.
+      env.ANALYZE === '1' &&
+        visualizer({ filename: 'dist/stats.html', gzipSize: true, brotliSize: true }),
+    ].filter(Boolean),
     resolve: {
       alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
     },
