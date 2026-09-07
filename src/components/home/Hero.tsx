@@ -1,13 +1,13 @@
 import { ArrowRight, MapPin } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
-import { Logo } from '@/components/ui/Logo'
 import { Container } from '@/components/ui/Section'
 import { HeroVisual } from '@/components/three/HeroVisual'
+import { assurances } from '@/data/content'
 import { siteConfig } from '@/data/site.config'
 
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-20">
+    <section className="relative isolate overflow-hidden pt-6 pb-14 sm:pt-10 sm:pb-20">
       <div aria-hidden="true" className="ms-grid-backdrop absolute inset-0 -z-20 opacity-70" />
 
       {/*
@@ -16,42 +16,55 @@ export function Hero() {
       */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <HeroVisual />
-        <div className="absolute inset-0 hidden bg-[linear-gradient(to_right,var(--color-navy-950)_0%,color-mix(in_oklab,var(--color-navy-950)_88%,transparent)_30%,color-mix(in_oklab,var(--color-navy-950)_30%,transparent)_50%,transparent_66%)] lg:block" />
+        <div className="absolute inset-0 hidden bg-[linear-gradient(to_right,var(--color-navy-950)_0%,color-mix(in_oklab,var(--color-navy-950)_92%,transparent)_38%,color-mix(in_oklab,var(--color-navy-950)_35%,transparent)_58%,transparent_72%)] lg:block" />
       </div>
 
       <Container>
-        <div className="relative max-w-2xl lg:max-w-xl">
-          <Logo size={52} />
+        <p className="ms-rule-label max-w-xs">Web studio &middot; Mauritius</p>
 
-          <h1 className="mt-7 text-[2.5rem] leading-[1.05] font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-            Websites &amp; Web Apps <span className="ms-gradient-text">Built for Growth</span>
-          </h1>
+        <h1 className="mt-7 max-w-[13ch] text-hero font-extrabold lg:max-w-[11ch]">
+          Websites that <span className="ms-serif text-turquoise-400">win</span> you{' '}
+          <span className="ms-marker">work</span>.
+        </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-300 sm:text-lg">
-            {siteConfig.businessName} creates modern websites and custom digital solutions that help
-            businesses work smarter, reach more customers and grow.
-          </p>
+        <p className="mt-7 max-w-lg text-lead text-ink-300">
+          {siteConfig.businessName} builds fast, modern websites and custom web apps for businesses
+          in Mauritius &mdash; designed to turn visitors into customers, not just to look busy.
+        </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <ButtonLink to="/contact" size="lg">
-              Request a Free Quote
-              <ArrowRight size={17} aria-hidden="true" />
-            </ButtonLink>
-            <ButtonLink to="/services" size="lg" variant="secondary">
-              Explore Our Services
-            </ButtonLink>
-          </div>
-
-          <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
-            <p className="font-medium text-ink-300">
-              React &bull; Vue.js &bull; Modern Web Solutions
-            </p>
-            <p className="inline-flex items-center gap-1.5 text-ink-400">
-              <MapPin size={14} aria-hidden="true" className="text-turquoise-500" />
-              Based in {siteConfig.location}
-            </p>
-          </div>
+        <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <ButtonLink to="/contact" size="lg">
+            Request a Free Quote
+            <ArrowRight size={17} aria-hidden="true" />
+          </ButtonLink>
+          <ButtonLink to="/work" size="lg" variant="secondary">
+            See how we build
+          </ButtonLink>
         </div>
+
+        <p className="mt-6 inline-flex items-center gap-1.5 text-sm text-ink-400">
+          <MapPin size={14} aria-hidden="true" className="text-turquoise-500" />
+          Based in {siteConfig.location} &mdash; {siteConfig.responseTime}
+        </p>
+
+        <dl className="mt-14 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-8 border-t border-cyan-400/12 pt-8 sm:grid-cols-4">
+          {assurances.map((item) => (
+            <div key={item.label}>
+              <dt className="sr-only">{item.label}</dt>
+              <dd>
+                <span className="ms-tnum block text-2xl font-extrabold tracking-tight text-ink-50">
+                  {item.value}
+                </span>
+                <span className="mt-1.5 block text-xs font-bold tracking-[0.16em] text-turquoise-400 uppercase">
+                  {item.label}
+                </span>
+                <span className="mt-2 block max-w-[24ch] text-sm leading-snug text-ink-500">
+                  {item.body}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
       </Container>
     </section>
   )

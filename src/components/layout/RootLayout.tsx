@@ -44,7 +44,7 @@ export function RootLayout() {
   }, [pathname, hash])
 
   return (
-    <div className="relative flex min-h-dvh flex-col">
+    <div className="ms-grain relative flex min-h-dvh flex-col">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-full focus:bg-turquoise-500 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-navy-950"

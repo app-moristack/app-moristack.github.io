@@ -11,7 +11,11 @@ export function ProblemsWeSolve() {
       <SectionHeading
         id="problems-heading"
         eyebrow="The problem"
-        title="Still Managing Your Business Manually?"
+        title={
+          <>
+            Still managing your business <span className="ms-serif text-coral-400">by hand</span>?
+          </>
+        }
         intro="Spreadsheets, paperwork and scattered messages work until they do not. We turn them into one clear, centralised system your whole team can rely on."
       />
 

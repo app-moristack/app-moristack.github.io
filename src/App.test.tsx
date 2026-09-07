@@ -16,7 +16,7 @@ describe('routing', () => {
     expect(
       await screen.findByRole('heading', {
         level: 1,
-        name: /Websites & Web Apps Built for Growth/i,
+        name: /Websites that win you work/i,
       }),
     ).toBeInTheDocument()
   })

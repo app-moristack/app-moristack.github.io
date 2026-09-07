@@ -32,7 +32,8 @@ export function Section({
 
 export function Eyebrow({ children }: { readonly children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-turquoise-500/25 bg-turquoise-500/8 px-3 py-1 text-xs font-semibold tracking-[0.14em] text-turquoise-400 uppercase">
+    <span className="inline-flex items-center gap-2.5 text-xs font-bold tracking-[0.2em] text-turquoise-400 uppercase">
+      <span aria-hidden="true" className="h-px w-7 bg-turquoise-500/60" />
       {children}
     </span>
   )
@@ -52,18 +53,17 @@ export function SectionHeading({
   readonly align?: 'center' | 'left'
 }) {
   return (
-    <Reveal className={cn('mb-12 max-w-2xl', align === 'center' && 'mx-auto text-center')}>
+    <Reveal
+      className={cn(
+        'mb-14 max-w-2xl',
+        align === 'center' && 'mx-auto flex flex-col items-center text-center',
+      )}
+    >
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <h2
-        id={id}
-        className={cn(
-          'text-3xl font-extrabold text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]',
-          eyebrow && 'mt-4',
-        )}
-      >
+      <h2 id={id} className={cn('text-section font-extrabold text-balance', eyebrow && 'mt-5')}>
         {title}
       </h2>
-      {intro ? <p className="mt-4 text-base leading-relaxed text-ink-300">{intro}</p> : null}
+      {intro ? <p className="mt-5 text-lead text-ink-400">{intro}</p> : null}
     </Reveal>
   )
 }

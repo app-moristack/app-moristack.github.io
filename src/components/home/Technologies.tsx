@@ -9,7 +9,11 @@ export function Technologies() {
       <SectionHeading
         id="tech-heading"
         eyebrow="Technology"
-        title="Built on tools that stay maintainable"
+        title={
+          <>
+            Built on tools that stay <span className="ms-serif text-cyan-400">maintainable</span>
+          </>
+        }
         intro="We choose established, well-supported technology so your project can be extended in two years, not rewritten."
       />
 

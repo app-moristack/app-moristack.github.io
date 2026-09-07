@@ -7,7 +7,7 @@ import { ProcessTimeline } from '@/components/home/ProcessTimeline'
 import { RestaurantShowcase } from '@/components/home/RestaurantShowcase'
 import { Technologies } from '@/components/home/Technologies'
 import { WhyChooseUs } from '@/components/home/WhyChooseUs'
-import { ServiceCard } from '@/components/ui/ServiceCard'
+import { ServiceRow } from '@/components/ui/ServiceRow'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section, SectionHeading } from '@/components/ui/Section'
 import { services } from '@/data/services'
@@ -25,15 +25,21 @@ export default function HomePage() {
       <Section labelledBy="services-heading">
         <SectionHeading
           id="services-heading"
+          align="left"
           eyebrow="What we do"
-          title="Solutions that solve real business problems"
+          title={
+            <>
+              Solutions that solve real{' '}
+              <span className="ms-serif text-turquoise-400">business</span> problems
+            </>
+          }
           intro="From a first website to a system that runs your operations, every project starts with what the business actually needs."
         />
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="border-b border-cyan-400/12">
           {services.map((service, index) => (
-            <Reveal key={service.slug} delay={index * 0.05} className="h-full">
-              <ServiceCard service={service} />
+            <Reveal key={service.slug} delay={index * 0.04}>
+              <ServiceRow service={service} index={index} />
             </Reveal>
           ))}
         </div>

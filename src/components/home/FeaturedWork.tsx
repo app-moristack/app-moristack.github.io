@@ -11,7 +11,11 @@ export function FeaturedWork() {
       <SectionHeading
         id="work-heading"
         eyebrow="Our work"
-        title="Concepts that show how we build"
+        title={
+          <>
+            Concepts that show how we <span className="ms-serif text-turquoise-400">build</span>
+          </>
+        }
         intro="Structure, interface decisions and code quality, demonstrated on realistic scenarios."
       />
 

@@ -278,3 +278,33 @@ export const aboutPoints: readonly AboutPoint[] = [
     body: 'Regular updates during the project and help after you go live.',
   },
 ]
+
+export type Assurance = { readonly value: string; readonly label: string; readonly body: string }
+
+/**
+ * Commitments, not achievements. Every line is something MoriStack controls and
+ * can honour on day one, so none of it implies a client history that does not
+ * exist yet.
+ */
+export const assurances: readonly Assurance[] = [
+  {
+    value: '1 day',
+    label: 'Reply time',
+    body: 'Every enquiry answered within one business day.',
+  },
+  {
+    value: 'Fixed',
+    label: 'Written quote',
+    body: 'Scope and price agreed in writing before any work starts.',
+  },
+  {
+    value: 'Direct',
+    label: 'No middleman',
+    body: 'You talk to the developer building it, never an account manager.',
+  },
+  {
+    value: 'Local',
+    label: 'Mauritius',
+    body: 'Same time zone, same context, a real conversation when you need one.',
+  },
+]

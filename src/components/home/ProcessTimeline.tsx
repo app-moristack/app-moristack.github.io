@@ -8,7 +8,11 @@ export function ProcessTimeline() {
       <SectionHeading
         id="process-heading"
         eyebrow="How we work"
-        title="A clear five-step process"
+        title={
+          <>
+            A clear <span className="ms-serif text-cyan-400">five-step</span> process
+          </>
+        }
         intro="You always know what stage the project is at, what happens next, and what is expected from you."
       />
 
