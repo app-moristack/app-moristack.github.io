@@ -25,6 +25,14 @@ describe('Header', () => {
     renderWithRouter(<Header />)
     expect(screen.getAllByRole('link', { name: 'Request a Quote' }).length).toBeGreaterThan(0)
   })
+
+  it('opens a WhatsApp chat on the configured number', () => {
+    renderWithRouter(<Header />)
+
+    const chat = screen.getByRole('link', { name: /on WhatsApp/i })
+    expect(chat).toHaveAttribute('href', 'https://wa.me/23057079335')
+    expect(chat).toHaveAttribute('target', '_blank')
+  })
 })
 
 describe('mobile menu', () => {

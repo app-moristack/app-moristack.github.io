@@ -4,7 +4,8 @@ import { Menu, X } from 'lucide-react'
 import { Link, NavLink } from 'react-router'
 import { ButtonLink } from '@/components/ui/Button'
 import { Logo } from '@/components/ui/Logo'
-import { siteConfig } from '@/data/site.config'
+import { SocialIcon } from '@/components/ui/SocialIcon'
+import { siteConfig, whatsappLink } from '@/data/site.config'
 import { usePrefersReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
 
@@ -104,6 +105,19 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {whatsappLink ? (
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={`Contact ${siteConfig.businessName} on WhatsApp`}
+              title={`WhatsApp ${siteConfig.whatsappNumber}`}
+              className="inline-flex size-11 items-center justify-center rounded-full border border-cyan-400/20 bg-navy-800/60 text-turquoise-400 transition-colors hover:border-turquoise-500/45 hover:text-turquoise-300"
+            >
+              <SocialIcon name="whatsapp" size={19} />
+            </a>
+          ) : null}
+
           {/* max-md:hidden, not hidden: only a media-query variant beats the base inline-flex. */}
           <ButtonLink to="/contact" className="max-md:hidden">
             Request a Quote
@@ -160,6 +174,18 @@ export function Header() {
               >
                 Request a Quote
               </Link>
+              {whatsappLink ? (
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  onClick={closeMenu}
+                  className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-turquoise-500/35 px-5 text-sm font-semibold text-turquoise-400"
+                >
+                  <SocialIcon name="whatsapp" size={17} />
+                  WhatsApp {siteConfig.whatsappNumber}
+                </a>
+              ) : null}
             </nav>
           </motion.div>
         ) : null}

@@ -51,8 +51,7 @@ export const siteConfig: SiteConfig = {
   email: 'moristack@gmail.com',
   // TODO: set VITE_PHONE (international format, e.g. +230 5xxx xxxx) once a public number exists.
   phone: rawPhone || null,
-  // TODO: set VITE_WHATSAPP_NUMBER (digits only, e.g. 2305xxxxxxx) to enable WhatsApp links.
-  whatsappNumber: rawWhatsapp || null,
+  whatsappNumber: rawWhatsapp || '+230 5707 9335',
   location: 'Mauritius',
   // TODO: replace with the live domain once one is registered.
   domain: import.meta.env.VITE_SITE_URL?.trim() || 'https://app-moristack.github.io',

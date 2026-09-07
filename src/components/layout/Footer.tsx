@@ -4,7 +4,7 @@ import { Container } from '@/components/ui/Section'
 import { Logo } from '@/components/ui/Logo'
 import { SocialIcon } from '@/components/ui/SocialIcon'
 import { services } from '@/data/services'
-import { activeSocials, siteConfig } from '@/data/site.config'
+import { activeSocials, siteConfig, whatsappLink } from '@/data/site.config'
 
 export function Footer() {
   return (
@@ -69,6 +69,19 @@ export function Footer() {
               <Mail size={15} aria-hidden="true" className="text-turquoise-500" />
               {siteConfig.email}
             </a>
+            {whatsappLink ? (
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="mt-2 flex items-center gap-2 text-sm text-ink-300 transition-colors hover:text-turquoise-400"
+              >
+                <span aria-hidden="true" className="text-turquoise-500">
+                  <SocialIcon name="whatsapp" size={15} />
+                </span>
+                WhatsApp {siteConfig.whatsappNumber}
+              </a>
+            ) : null}
             {siteConfig.phone ? (
               <a
                 href={`tel:${siteConfig.phone.replace(/\s/g, '')}`}
