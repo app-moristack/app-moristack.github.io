@@ -27,7 +27,7 @@ export function Hero() {
       */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <HeroVisual />
-        <div className="absolute inset-0 hidden bg-[linear-gradient(to_right,var(--color-navy-950)_0%,color-mix(in_oklab,var(--color-navy-950)_92%,transparent)_38%,color-mix(in_oklab,var(--color-navy-950)_35%,transparent)_58%,transparent_72%)] lg:block" />
+        <div className="absolute inset-0 hidden bg-[linear-gradient(to_right,var(--color-navy-950)_0%,color-mix(in_oklab,var(--color-navy-950)_92%,transparent)_38%,color-mix(in_oklab,var(--color-navy-950)_35%,transparent)_58%,transparent_72%)] md:block" />
       </div>
 
       <Container>
@@ -37,13 +37,13 @@ export function Hero() {
               <p className="ms-rule-label max-w-xs">Web studio &middot; Mauritius</p>
             </StaggerItem>
 
-            <h1 className="mt-7 max-w-[13ch] text-hero font-extrabold lg:max-w-[11ch]">
+            <h1 className="mt-7 max-w-[14ch] text-hero font-extrabold lg:max-w-[13ch]">
               <RevealLines delayChildren={0.08}>
                 <RevealLine>
-                  Websites that <span className="ms-serif text-turquoise-400">win</span>
+                  <span className="ms-serif text-turquoise-400">Digital</span> experiences,
                 </RevealLine>
                 <RevealLine>
-                  you <span className="ms-marker">work</span>.
+                  engineered in <span className="ms-marker">Mauritius</span>.
                 </RevealLine>
               </RevealLines>
             </h1>

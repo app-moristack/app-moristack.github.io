@@ -3,7 +3,7 @@ import { motion } from 'motion/react'
 import { usePrefersReducedMotion } from '@/hooks/useReducedMotion'
 import { fadeIn, staggerContainer, viewportOnce, type RevealDirection } from '@/lib/motion'
 
-type Tag = 'div' | 'ul' | 'ol' | 'li' | 'dl' | 'section'
+type Tag = 'div' | 'ul' | 'ol' | 'li' | 'dl' | 'p' | 'section'
 
 /**
  * Orchestrates its children from one scroll trigger, so a grid arrives as a

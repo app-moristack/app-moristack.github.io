@@ -3,6 +3,9 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { App } from './App'
 
+/** Routes are lazy chunks; 1s is not enough to load one cold under vitest. */
+const LAZY_ROUTE = { timeout: 5000 }
+
 const renderRoute = (path: string) =>
   render(
     <MemoryRouter initialEntries={[path]}>
@@ -14,10 +17,11 @@ describe('routing', () => {
   it('renders the home page at the index route', async () => {
     renderRoute('/')
     expect(
-      await screen.findByRole('heading', {
-        level: 1,
-        name: /Websites that win you work/i,
-      }),
+      await screen.findByRole(
+        'heading',
+        { level: 1, name: /Digital experiences, engineered in Mauritius/i },
+        LAZY_ROUTE,
+      ),
     ).toBeInTheDocument()
   })
 
@@ -29,13 +33,19 @@ describe('routing', () => {
     ['/privacy', /Privacy Policy/i],
   ])('renders %s', async (path, heading) => {
     renderRoute(path)
-    expect(await screen.findByRole('heading', { level: 1, name: heading })).toBeInTheDocument()
+    expect(
+      await screen.findByRole('heading', { level: 1, name: heading }, LAZY_ROUTE),
+    ).toBeInTheDocument()
   })
 
   it('renders the custom 404 page for an unknown route', async () => {
     renderRoute('/this-route-does-not-exist')
     expect(
-      await screen.findByRole('heading', { level: 1, name: /This page does not exist/i }),
+      await screen.findByRole(
+        'heading',
+        { level: 1, name: /This page does not exist/i },
+        LAZY_ROUTE,
+      ),
     ).toBeInTheDocument()
   })
 

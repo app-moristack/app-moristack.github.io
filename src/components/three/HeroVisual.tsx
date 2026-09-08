@@ -4,8 +4,13 @@ import { usePrefersReducedMotion } from '@/hooks/useReducedMotion'
 
 const HeroScene = lazy(() => import('./HeroScene'))
 
-/** Slides the scene clear of the headline. The scene only runs at lg and above. */
-const SCENE_OFFSET_X = 3.1
+type Composition = { readonly offsetX: number; readonly scale: number }
+
+/** Slides the massif clear of the headline and sizes it for the viewport. */
+/** The camera is fixed, so a wider frustum needs a bigger model to keep presence. */
+const WIDE: Composition = { offsetX: 3.1, scale: 0.8 }
+const DESKTOP: Composition = { offsetX: 2.3, scale: 0.74 }
+const TABLET: Composition = { offsetX: 1.4, scale: 0.5 }
 
 /** Pure CSS stand-in: shown until the scene loads, and permanently when it cannot run. */
 function StaticFallback() {
@@ -13,7 +18,8 @@ function StaticFallback() {
     <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 size-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(34,229,174,0.18),transparent_62%)] blur-2xl lg:left-[72%]" />
       <div className="absolute top-[34%] left-[58%] size-[18rem] rounded-full bg-[radial-gradient(circle,rgba(255,107,69,0.12),transparent_65%)] blur-2xl lg:left-[84%]" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(to_top,rgba(16,64,92,0.3),transparent)] [clip-path:polygon(0_100%,18%_58%,34%_34%,52%_28%,70%_44%,86%_62%,100%_100%)]" />
+      {/* The flat-topped massif, so the silhouette still reads as Le Morne without WebGL. */}
+      <div className="absolute inset-x-0 bottom-0 h-44 bg-[linear-gradient(to_top,rgba(16,64,92,0.6),rgba(34,229,174,0.12))] [clip-path:polygon(0_100%,8%_94%,21%_60%,32%_38%,44%_31%,63%_30%,75%_39%,84%_60%,92%_84%,100%_100%)]" />
     </div>
   )
 }
@@ -33,23 +39,26 @@ function supportsWebGl() {
  */
 export function HeroVisual() {
   const reducedMotion = usePrefersReducedMotion()
-  const [enabled, setEnabled] = useState(false)
+  const [composition, setComposition] = useState<Composition | null>(null)
   const [tabVisible, setTabVisible] = useState(true)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const smallScreen = window.matchMedia('(max-width: 1023px)').matches
+    const phone = window.matchMedia('(max-width: 767px)').matches
     const lowCoreCount = (navigator.hardwareConcurrency ?? 8) <= 4
     const saveData =
       (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData ===
       true
 
-    if (smallScreen || lowCoreCount || saveData || !supportsWebGl()) return
+    if (phone || lowCoreCount || saveData || !supportsWebGl()) return
 
+    const wide = window.matchMedia('(min-width: 1600px)').matches
+    const desktop = window.matchMedia('(min-width: 1024px)').matches
+    const layout = wide ? WIDE : desktop ? DESKTOP : TABLET
     const schedule =
       window.requestIdleCallback ?? ((callback: () => void) => window.setTimeout(callback, 600))
-    const handle = schedule(() => setEnabled(true))
+    const handle = schedule(() => setComposition(layout))
 
     return () => {
       if (window.cancelIdleCallback) window.cancelIdleCallback(handle as number)
@@ -66,10 +75,14 @@ export function HeroVisual() {
   return (
     <div className="pointer-events-none absolute inset-0">
       <StaticFallback />
-      {enabled ? (
+      {composition ? (
         <ErrorBoundary fallback={null}>
           <Suspense fallback={null}>
-            <HeroScene animate={tabVisible && !reducedMotion} offsetX={SCENE_OFFSET_X} />
+            <HeroScene
+              animate={tabVisible && !reducedMotion}
+              offsetX={composition.offsetX}
+              scale={composition.scale}
+            />
           </Suspense>
         </ErrorBoundary>
       ) : null}
