@@ -8,7 +8,7 @@ import { RestaurantShowcase } from '@/components/home/RestaurantShowcase'
 import { Technologies } from '@/components/home/Technologies'
 import { WhyChooseUs } from '@/components/home/WhyChooseUs'
 import { ServiceRow } from '@/components/ui/ServiceRow'
-import { Reveal } from '@/components/ui/Reveal'
+import { Stagger, StaggerItem } from '@/components/ui/Stagger'
 import { Section, SectionHeading } from '@/components/ui/Section'
 import { services } from '@/data/services'
 
@@ -36,13 +36,13 @@ export default function HomePage() {
           intro="From a first website to a system that runs your operations, every project starts with what the business actually needs."
         />
 
-        <div className="border-b border-cyan-400/12">
+        <Stagger stagger={0.06} className="border-b border-cyan-400/12">
           {services.map((service, index) => (
-            <Reveal key={service.slug} delay={index * 0.04}>
+            <StaggerItem key={service.slug} direction="right">
               <ServiceRow service={service} index={index} />
-            </Reveal>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </Section>
 
       <ProblemsWeSolve />

@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { Link, NavLink } from 'react-router'
 import { ButtonLink } from '@/components/ui/Button'
+import { ScrollProgress } from '@/components/ui/ScrollProgress'
 import { Logo } from '@/components/ui/Logo'
 import { SocialIcon } from '@/components/ui/SocialIcon'
 import { siteConfig, whatsappLink } from '@/data/site.config'
@@ -67,6 +68,8 @@ export function Header() {
           : 'bg-transparent py-4',
       )}
     >
+      <ScrollProgress />
+
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
         <Link
           to="/"
@@ -93,8 +96,10 @@ export function Header() {
                 <>
                   {link.label}
                   {isActive ? (
-                    <span
+                    <motion.span
                       aria-hidden="true"
+                      layoutId={reduced ? undefined : 'nav-active'}
+                      transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                       className="absolute inset-x-3.5 -bottom-0.5 h-px bg-turquoise-500"
                     />
                   ) : null}

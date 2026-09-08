@@ -2,6 +2,7 @@ import { Suspense, useEffect, useRef } from 'react'
 import { Outlet, useLocation } from 'react-router'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { Footer } from './Footer'
+import { PageTransition } from './PageTransition'
 import { Header } from './Header'
 
 function RouteFallback() {
@@ -57,7 +58,9 @@ export function RootLayout() {
       <main id="main" ref={mainRef} tabIndex={-1} className="flex-1 pt-20 outline-none sm:pt-24">
         <ErrorBoundary>
           <Suspense fallback={<RouteFallback />}>
-            <Outlet />
+            <PageTransition>
+              <Outlet />
+            </PageTransition>
           </Suspense>
         </ErrorBoundary>
       </main>

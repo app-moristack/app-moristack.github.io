@@ -1,7 +1,9 @@
 import { Check } from 'lucide-react'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section, SectionHeading } from '@/components/ui/Section'
+import { Stagger, StaggerItem } from '@/components/ui/Stagger'
 import { technologies, technologyBenefits } from '@/data/content'
+import { TechTicker } from './TechTicker'
 
 export function Technologies() {
   return (
@@ -17,14 +19,15 @@ export function Technologies() {
         intro="We choose established, well-supported technology so your project can be extended in two years, not rewritten."
       />
 
-      <div className="grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-14">
-        <ul className="grid gap-3 sm:grid-cols-2">
-          {technologies.map((tech, index) => (
-            <Reveal
+      <TechTicker />
+
+      <div className="mt-14 grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-14">
+        <Stagger as="ul" stagger={0.05} className="grid gap-3 sm:grid-cols-2">
+          {technologies.map((tech) => (
+            <StaggerItem
               as="li"
               key={tech.name}
-              delay={index * 0.04}
-              className="ms-panel flex gap-4 p-4"
+              className="ms-panel flex gap-4 p-4 transition-[transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-cyan-400/35"
             >
               <span
                 aria-hidden="true"
@@ -36,27 +39,31 @@ export function Technologies() {
                 <span className="block text-sm font-bold text-ink-50">{tech.name}</span>
                 <span className="mt-1 block text-sm leading-relaxed text-ink-400">{tech.body}</span>
               </span>
-            </Reveal>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
 
         <Reveal
-          delay={0.1}
+          direction="left"
           className="ms-panel h-fit border-turquoise-500/22 bg-gradient-to-br from-turquoise-500/8 to-transparent p-6 sm:p-7"
         >
           <h3 className="text-lg font-bold text-ink-50">What this means for you</h3>
-          <ul className="mt-5 space-y-3.5">
+          <Stagger as="ul" stagger={0.06} delayChildren={0.2} className="mt-5 space-y-3.5">
             {technologyBenefits.map((benefit) => (
-              <li key={benefit} className="flex items-start gap-3 text-sm text-ink-300">
+              <StaggerItem
+                as="li"
+                key={benefit}
+                className="flex items-start gap-3 text-sm text-ink-300"
+              >
                 <Check
                   size={16}
                   aria-hidden="true"
                   className="mt-0.5 shrink-0 text-turquoise-400"
                 />
                 {benefit}
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </Stagger>
         </Reveal>
       </div>
     </Section>

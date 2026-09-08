@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => {
           manualChunks(id) {
             if (!id.includes('node_modules')) return
             if (/three|@react-three/.test(id)) return 'three'
-            if (/framer-motion|motion-dom|motion-utils/.test(id)) return 'motion'
+            if (id.includes('/motion/') || /motion-dom|motion-utils/.test(id)) return 'motion'
             if (/react-hook-form|@hookform|zod/.test(id)) return 'forms'
             if (/react-router/.test(id)) return 'router'
             if (/react-dom|scheduler|[\\/]react[\\/]/.test(id)) return 'react'

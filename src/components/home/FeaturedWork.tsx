@@ -1,8 +1,10 @@
 import { Info } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
+import { Magnetic } from '@/components/ui/Magnetic'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { Reveal } from '@/components/ui/Reveal'
 import { Section, SectionHeading } from '@/components/ui/Section'
+import { Stagger, StaggerItem } from '@/components/ui/Stagger'
 import { featuredProjects } from '@/data/projects'
 
 export function FeaturedWork() {
@@ -27,18 +29,20 @@ export function FeaturedWork() {
         </p>
       </Reveal>
 
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {featuredProjects.map((project, index) => (
-          <Reveal key={project.slug} delay={index * 0.06} className="h-full">
+      <Stagger stagger={0.08} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {featuredProjects.map((project) => (
+          <StaggerItem key={project.slug} className="h-full">
             <ProjectCard project={project} />
-          </Reveal>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
 
       <div className="mt-10 text-center">
-        <ButtonLink to="/work" variant="secondary" size="lg">
-          See all our work
-        </ButtonLink>
+        <Magnetic strength={0.24}>
+          <ButtonLink to="/work" variant="secondary" size="lg">
+            See all our work
+          </ButtonLink>
+        </Magnetic>
       </div>
     </Section>
   )

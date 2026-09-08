@@ -1,5 +1,5 @@
-import { Reveal } from '@/components/ui/Reveal'
 import { Section, SectionHeading } from '@/components/ui/Section'
+import { Stagger, StaggerItem } from '@/components/ui/Stagger'
 import { whyChooseUs } from '@/data/content'
 
 export function WhyChooseUs() {
@@ -17,23 +17,27 @@ export function WhyChooseUs() {
         intro="You work directly with the person who designs, builds and supports what you launch — and that changes what you get."
       />
 
-      <ul className="grid gap-x-12 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+      <Stagger as="ul" stagger={0.05} className="grid gap-x-12 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
         {whyChooseUs.map((item, index) => (
-          <Reveal as="li" key={item.title} delay={index * 0.03} className="group">
+          <StaggerItem as="li" key={item.title} className="group">
             <span
               aria-hidden="true"
-              className="ms-tnum text-xs font-bold tracking-[0.18em] text-coral-400/70"
+              className="ms-tnum text-xs font-bold tracking-[0.18em] text-coral-400/70 transition-colors duration-300 group-hover:text-coral-400"
             >
               {String(index + 1).padStart(2, '0')}
             </span>
             <h3 className="mt-2.5 flex items-center gap-2.5 text-base font-bold text-ink-50">
-              <item.icon size={17} aria-hidden="true" className="shrink-0 text-turquoise-400" />
+              <item.icon
+                size={17}
+                aria-hidden="true"
+                className="shrink-0 text-turquoise-400 transition-transform duration-300 group-hover:scale-110"
+              />
               {item.title}
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-ink-400">{item.body}</p>
-          </Reveal>
+          </StaggerItem>
         ))}
-      </ul>
+      </Stagger>
     </Section>
   )
 }

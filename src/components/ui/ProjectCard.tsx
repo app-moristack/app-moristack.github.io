@@ -1,4 +1,5 @@
 import { ExternalLink, ImageOff } from 'lucide-react'
+import { Spotlight } from '@/components/ui/Spotlight'
 import { SocialIcon } from '@/components/ui/SocialIcon'
 import type { Project } from '@/data/projects'
 import { assetUrl } from '@/data/site.config'
@@ -12,7 +13,10 @@ const statusStyles: Record<Project['status'], string> = {
 
 export function ProjectCard({ project }: { readonly project: Project }) {
   return (
-    <article className="ms-panel group flex h-full flex-col overflow-hidden transition-[transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-turquoise-500/35">
+    <Spotlight
+      as="article"
+      className="ms-panel group flex h-full flex-col overflow-hidden transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-turquoise-500/35 hover:shadow-lift"
+    >
       <div className="relative aspect-16/10 overflow-hidden bg-navy-800/70">
         {project.screenshot ? (
           <img
@@ -107,6 +111,6 @@ export function ProjectCard({ project }: { readonly project: Project }) {
           </div>
         ) : null}
       </div>
-    </article>
+    </Spotlight>
   )
 }

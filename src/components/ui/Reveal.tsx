@@ -1,31 +1,48 @@
 import type { ReactNode } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import { usePrefersReducedMotion } from '@/hooks/useReducedMotion'
+import { fadeIn, viewportOnce, type RevealDirection } from '@/lib/motion'
 
 type RevealProps = {
   readonly children: ReactNode
   readonly delay?: number
-  readonly y?: number
+  readonly direction?: RevealDirection
+  readonly distance?: number
   readonly className?: string
   readonly as?: 'div' | 'li' | 'section' | 'article'
+  readonly 'aria-hidden'?: boolean | 'true' | 'false'
 }
 
-export function Reveal({ children, delay = 0, y = 18, className, as = 'div' }: RevealProps) {
+export function Reveal({
+  children,
+  delay = 0,
+  direction = 'up',
+  distance = 1,
+  className,
+  as = 'div',
+  ...rest
+}: RevealProps) {
   const reduced = usePrefersReducedMotion()
   const Component = motion[as]
 
   if (reduced) {
     const Static = as
-    return <Static className={className}>{children}</Static>
+    return (
+      <Static className={className} {...rest}>
+        {children}
+      </Static>
+    )
   }
 
   return (
     <Component
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      variants={fadeIn(direction, distance)}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
+      transition={{ delay }}
+      {...rest}
     >
       {children}
     </Component>

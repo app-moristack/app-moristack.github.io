@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { ArrowRight, Mail, MessageCircle } from 'lucide-react'
 import { Link } from 'react-router'
 import { ButtonAnchor, ButtonLink } from '@/components/ui/Button'
+import { Magnetic } from '@/components/ui/Magnetic'
 import { Reveal } from '@/components/ui/Reveal'
 import { Container } from '@/components/ui/Section'
 import { siteConfig, whatsappLink } from '@/data/site.config'
@@ -44,10 +45,16 @@ export function CallToAction({
           <p className="mx-auto mt-6 max-w-xl text-lead text-ink-400">{intro}</p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <ButtonLink to="/contact" size="lg">
-              Request a Free Quote
-              <ArrowRight size={17} aria-hidden="true" />
-            </ButtonLink>
+            <Magnetic>
+              <ButtonLink to="/contact" size="lg" className="group">
+                Request a Free Quote
+                <ArrowRight
+                  size={17}
+                  aria-hidden="true"
+                  className="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1"
+                />
+              </ButtonLink>
+            </Magnetic>
 
             <ButtonAnchor href={`mailto:${siteConfig.email}`} size="lg" variant="secondary">
               <Mail size={16} aria-hidden="true" />
