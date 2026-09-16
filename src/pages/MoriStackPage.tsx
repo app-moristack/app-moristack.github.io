@@ -1,16 +1,14 @@
 import { useEffect, useRef } from 'react'
-import { ArrowDown, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router'
 import { Seo } from '@/components/Seo'
 import { LauncherCard } from '@/components/home/LauncherCard'
 import { Logo } from '@/components/ui/Logo'
-import { assetUrl } from '@/data/site.config'
+import { ConnectedHero } from '@/components/home/ConnectedHero'
 import { launcherApps } from '@/data/launcher'
-import { usePrefersReducedMotion } from '@/hooks/useReducedMotion'
 import '@/styles/launcher.css'
 
 export default function MoriStackPage() {
-  const reduced = usePrefersReducedMotion()
   const launcherRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -40,52 +38,7 @@ export default function MoriStackPage() {
         description="Your gateway to the MoriStack ecosystem. Explore MoriHome, MoriCar and MoriHealth — digital platforms for a more connected Mauritius."
       />
       <div className="launcher-layout">
-        <section className="launcher-hero" aria-labelledby="launcher-heading">
-          <p className="launcher-eyebrow">
-            <span /> One island. Endless possibilities.
-          </p>
-          <h1 id="launcher-heading">
-            A More
-            <br />
-            <span>Connected</span>
-            <br />
-            Mauritius
-          </h1>
-          <p className="launcher-intro">
-            Find your home. Get moving. Live well.
-            <br />
-            Everyday connections, made simpler.
-          </p>
-          <div className="launcher-landscape" aria-hidden="true">
-            <img
-              src={assetUrl('launcher/le-morne.webp')}
-              width="1200"
-              height="800"
-              fetchPriority="high"
-              alt=""
-            />
-            <span className="launcher-orbit launcher-orbit-one" />
-            <span className="launcher-orbit launcher-orbit-two" />
-            <span className="launcher-beacon" />
-          </div>
-          <p className="launcher-island-note">
-            Small island.
-            <br />
-            <span>Bigger possibilities.</span>
-          </p>
-          <button
-            type="button"
-            className="launcher-explore"
-            onClick={() => {
-              document
-                .getElementById('launcher-apps')
-                ?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'nearest' })
-            }}
-            aria-label="Explore applications"
-          >
-            <ArrowDown size={18} />
-          </button>
-        </section>
+        <ConnectedHero />
 
         <section className="launcher-apps" id="launcher-apps" aria-label="MoriStack applications">
           <div className="launcher-grid-heading">

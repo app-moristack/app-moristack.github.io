@@ -157,20 +157,23 @@
   min-width: 0;
   width: 100%;
   text-align: left;
-  perspective: 1000px;
+  perspective: 850px;
+  perspective-origin: 50% 42%;
   border-radius: 20px;
   animation: launcher-arrive 0.65s both;
   animation-delay: var(--card-delay);
   touch-action: manipulation;
 }
 .launcher-card-rotor {
+  position: relative;
   display: grid;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateZ(0) rotateY(0deg);
+  transition: transform 1.2s cubic-bezier(0.45, 0, 0.55, 1);
 }
 .launcher-card[data-flipped='true'] .launcher-card-rotor {
-  transform: rotateY(180deg);
+  transform: translateY(-6px) translateZ(18px) rotateY(180deg);
 }
 .launcher-card-face {
   grid-area: 1 / 1;
@@ -187,22 +190,34 @@
     0 9px 0 -4px #348ab688,
     0 15px 24px -13px #20acff88;
   transition:
-    border-color 0.25s,
-    box-shadow 0.25s;
+    visibility 0s 0.6s,
+    opacity 0s 0.6s,
+    border-color 0.6s,
+    box-shadow 0.6s;
 }
 /* Explicitly hide the inactive face: mobile compositors can paint positioned
  * children through a rotated parent despite backface-visibility. Keep both
- * faces in the grid so flipping never changes the card's dimensions. */
+ * faces in the grid so flipping never changes the card's dimensions. Switch
+ * visibility halfway through the turn, when the card is edge-on. */
 .launcher-card-face[aria-hidden='true'] {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
 }
-.launcher-card-face[aria-hidden='true'] * {
-  visibility: hidden;
+.launcher-card-front {
+  transform: translateZ(4px);
+}
+.launcher-card-rotor::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: #102c3e;
+  box-shadow: 0 22px 35px -18px #000b;
+  pointer-events: none;
 }
 .launcher-card-back {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(4px);
   display: flex;
   flex-direction: column;
   justify-content: center;
