@@ -67,7 +67,7 @@ export const siteConfig: SiteConfig = {
   whatsappNumber: rawWhatsapp || '+230 5707 9335',
   location: 'Mauritius',
   // TODO: replace with the live domain once one is registered.
-  domain: import.meta.env.VITE_SITE_URL?.trim() || 'https://app-moristack.github.io',
+  domain: import.meta.env.VITE_SITE_URL?.trim() || 'https://moristack.duckdns.org',
   basePath: import.meta.env.BASE_URL,
   responseTime: 'We reply to every enquiry within 1 business day.',
   socials: [

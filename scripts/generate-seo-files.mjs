@@ -10,7 +10,7 @@ import { normalizeBasePath } from '../vite.config.ts'
 
 const dist = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist')
 
-const origin = (process.env.VITE_SITE_URL || 'https://app-moristack.github.io').replace(/\/+$/, '')
+const origin = (process.env.VITE_SITE_URL || 'https://moristack.duckdns.org').replace(/\/+$/, '')
 const base = normalizeBasePath(process.env.VITE_BASE_PATH)
 const siteUrl = `${origin}${base}`
 

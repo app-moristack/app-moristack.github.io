@@ -190,6 +190,17 @@
     border-color 0.25s,
     box-shadow 0.25s;
 }
+/* Explicitly hide the inactive face: mobile compositors can paint positioned
+ * children through a rotated parent despite backface-visibility. Keep both
+ * faces in the grid so flipping never changes the card's dimensions. */
+.launcher-card-face[aria-hidden='true'] {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.launcher-card-face[aria-hidden='true'] * {
+  visibility: hidden;
+}
 .launcher-card-back {
   transform: rotateY(180deg);
   display: flex;

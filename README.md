@@ -24,10 +24,11 @@ homepage on larger screens. Explicit routes work at every width: `/#/home` opens
 the preserved homepage and `/#/moristack` opens the launcher. Existing root section
 links continue to open their original homepage sections, including on mobile.
 
-Set `VITE_MORIHOME_URL`, `VITE_MORICAR_URL`, and `VITE_MORIHEALTH_URL` to public app
-destinations in `.env` (and GitHub repository variables for deployment). Without a
-URL, a card is labelled "In development" and flips to show its description instead
-of claiming that an application is live. The launcher artwork is optimized WebP;
+The launcher arrows link to `https://morihom.duckdns.org`,
+`https://moricar.duckdns.org`, and `https://mauricare.mu`. Override these defaults
+with `VITE_MORIHOME_URL`, `VITE_MORICAR_URL`, and `VITE_MORIHEALTH_URL` in `.env`
+(or GitHub repository variables for deployment). Empty values use the defaults.
+The launcher artwork is optimized WebP;
 its depth and motion effects use CSS and respect reduced-motion preferences.
 
 | Command                 | What it does                                            |
@@ -128,54 +129,36 @@ Client-side validation catches mistakes and reduces spam. It is **not** a securi
 control: anyone can post to the endpoint directly, so rely on the provider's own spam
 filtering and never treat submitted content as trusted.
 
-## Deploying to GitHub Pages
+## Production deployment
 
-A workflow at `.github/workflows/deploy.yml` runs on every push to `main`. It installs
-dependencies with `npm ci`, lints, type checks, tests, builds, checks the build output,
-then deploys `dist/`. A failing lint, type error or test blocks the deploy.
+Production runs at https://moristack.duckdns.org in its own `moristack-app-1`
+container on 62.83.10.197. Caddy terminates HTTPS and connects over the dedicated
+`moristack_frontend` Docker network. The app has no published host ports.
 
-**One-time setup:**
+Push to `master` to deploy automatically using `.github/workflows/deploy-production.yml`.
+The workflow validates and builds the Docker image, transfers it using a restricted
+SSH key, and verifies HTTPS after deployment. Failed health checks restore the
+previous image. `master` is the repository default branch.
 
-1. Create an empty repository on GitHub — do not add a README or `.gitignore`.
-2. Add the remote and push:
-   ```bash
-   git remote add origin https://github.com/<user>/<repo>.git
-   git push -u origin main
-   ```
-3. Go to **Settings → Pages** and set **Source** to **GitHub Actions**.
-4. Add the form endpoint under **Settings → Secrets and variables → Actions →
-   Variables** as `VITE_CONTACT_FORM_ACCESS_KEY` — optional, a working key is already
-   committed (see the contact form section above).
-5. Push to `main`, or run the workflow manually from the **Actions** tab.
+GitHub Actions secrets are `PRODUCTION_SSH_KEY` and `PRODUCTION_SSH_HOST_KEY`.
+The key can only invoke `/usr/local/sbin/github-deploy-moristack`, installed from
+`scripts/github-deploy-server.sh`; it cannot open an interactive shell. The receiver
+accepts only the current `master` commit and checks the image revision label.
 
-The site then appears at `https://<user>.github.io/<repo>/`.
+Server configuration lives in `/srv/apps/moristack/compose.production.yaml`.
+Changes to the Compose file or deployment receiver require administrator installation;
+ordinary application changes deploy automatically. The previous image remains tagged
+`moristack:rollback`. To restore it, tag that image as `moristack:production` and run
+`docker compose -f compose.production.yaml up -d --no-build --wait` on the server.
 
-The base path comes from `actions/configure-pages`, which emits `/<repo>` for a project
-page but `/` for a user page or custom domain. `normalizeBasePath()` in
-`vite.config.ts` accepts either form, so the same workflow covers a project page, a
-user page and a custom domain, and the repository name is never hard-coded. That
-normaliser is covered by `src/lib/basePath.test.ts`, and the workflow's verify step
-fails the build if a doubled slash ever reaches an asset URL.
+Ecosystem URLs: MoriHome https://morihom.duckdns.org, MoriCar
+https://moricar.duckdns.org, MoriHealth https://mauricare.mu.
 
-Node's version is pinned in `.nvmrc` and read by both the workflow and `nvm use`, so
-CI and local builds use the same runtime.
+## GitHub Pages mirror
 
-### Custom domain
-
-1. In **Settings → Pages → Custom domain**, enter your domain and save. Tick
-   **Enforce HTTPS** once the certificate is issued.
-2. At your DNS provider:
-   - **Apex domain** (`moristack.mu`) — four `A` records to `185.199.108.153`,
-     `185.199.109.153`, `185.199.110.153`, `185.199.111.153`.
-   - **Subdomain** (`www.moristack.mu`) — one `CNAME` to `<user>.github.io`.
-3. Add a repository variable `VITE_SITE_URL` with the new origin, e.g.
-   `https://moristack.mu`, so canonical and social URLs are correct.
-4. Nothing else to edit — `robots.txt` and `sitemap.xml` are generated at build time
-   from `VITE_SITE_URL` and the base path by `scripts/generate-seo-files.mjs`.
-
-GitHub Pages writes a `CNAME` file into the branch when you save the custom domain.
-Because this repo deploys via an artifact rather than a branch, add `public/CNAME`
-containing just the domain if you want it preserved across deploys.
+`.github/workflows/deploy.yml` remains available as a manual workflow for the
+GitHub Pages mirror. Production pushes deploy to the VPS. Pages gets its base
+path from `actions/configure-pages` and its origin from the workflow configuration.
 
 ### Routing
 
@@ -317,5 +300,5 @@ All are marked with `TODO` in `src/data/site.config.ts`:
 - [x] Contact form connected to Web3Forms with a committed access key (250 submissions/month).
 - [ ] Add real social media URLs (currently `null`, so the links are hidden rather than broken).
 - [ ] Add `VITE_PHONE` and `VITE_WHATSAPP_NUMBER` if you want phone and WhatsApp links.
-- [ ] Set `VITE_SITE_URL` once the domain is decided — robots and sitemap follow it automatically.
+- [x] Production origin is `https://moristack.duckdns.org`; robots and sitemap follow it.
 - [ ] Add real project screenshots and promote any real client work from `Concept` to `Client Project`.

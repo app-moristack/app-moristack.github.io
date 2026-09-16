@@ -16,7 +16,7 @@ export const launcherApps = [
     category: 'Home & living',
     image: 'home',
     color: '#ffc56b',
-    url: appUrl(import.meta.env.VITE_MORIHOME_URL),
+    url: appUrl(import.meta.env.VITE_MORIHOME_URL?.trim() || 'https://morihom.duckdns.org'),
     description:
       'Your home. Your next chapter. Buy, sell, find a rental or rent out your property. Connect with professionals to keep your home at its best.',
   },
@@ -27,7 +27,7 @@ export const launcherApps = [
     category: 'On the road',
     image: 'car',
     color: '#ff6c85',
-    url: appUrl(import.meta.env.VITE_MORICAR_URL),
+    url: appUrl(import.meta.env.VITE_MORICAR_URL?.trim() || 'https://moricar.duckdns.org'),
     description:
       'Your next car. Your next journey. Buy, sell, rent a car or earn by renting out yours. Find maintenance services to keep you moving.',
   },
@@ -38,7 +38,7 @@ export const launcherApps = [
     category: 'Care & connection',
     image: 'care',
     color: '#74efb2',
-    url: appUrl(import.meta.env.VITE_MORIHEALTH_URL),
+    url: appUrl(import.meta.env.VITE_MORIHEALTH_URL?.trim() || 'https://mauricare.mu'),
     description: 'A future platform for connecting people with care and support.',
   },
 ] as const
