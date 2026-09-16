@@ -54,6 +54,9 @@ jobs:
           VITE_CONTACT_FORM_ENDPOINT: ${{ vars.VITE_CONTACT_FORM_ENDPOINT }}
           VITE_WHATSAPP_NUMBER: ${{ vars.VITE_WHATSAPP_NUMBER }}
           VITE_PHONE: ${{ vars.VITE_PHONE }}
+          VITE_MORIHOME_URL: ${{ vars.VITE_MORIHOME_URL }}
+          VITE_MORICAR_URL: ${{ vars.VITE_MORICAR_URL }}
+          VITE_MORIHEALTH_URL: ${{ vars.VITE_MORIHEALTH_URL }}
 
       - name: Verify build output
         run: |

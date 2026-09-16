@@ -60,7 +60,7 @@ export function CallToAction({
             </Magnetic>
 
             <Magnetic strength={0.22}>
-              <ButtonLink to="/#ecosystem" size="lg" variant="secondary">
+              <ButtonLink to="/home#ecosystem" size="lg" variant="secondary">
                 Explore MoriStack
               </ButtonLink>
             </Magnetic>

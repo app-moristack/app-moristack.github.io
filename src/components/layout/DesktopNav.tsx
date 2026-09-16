@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { ChevronDown } from 'lucide-react'
-import { NavLink } from 'react-router'
+import { PageNavLink as NavLink } from './PageNavLink'
 import { siteConfig, type NavLink as NavItem } from '@/data/site.config'
 import { usePrefersReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
@@ -152,7 +152,7 @@ export function DesktopNav() {
             />
           ) : (
             <li key={item.to}>
-              <NavLink to={item.to} end={item.to === '/'} className={linkClass}>
+              <NavLink to={item.to} className={linkClass}>
                 {item.label}
               </NavLink>
             </li>

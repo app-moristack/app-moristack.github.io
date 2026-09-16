@@ -17,6 +17,8 @@ const siteUrl = `${origin}${base}`
 /** Hash routes are fragments of the entry document, not separately indexable. */
 const routes = [
   { path: '', changefreq: 'monthly', priority: '1.0' },
+  { path: '#/home', changefreq: 'monthly', priority: '0.9' },
+  { path: '#/moristack', changefreq: 'monthly', priority: '0.9' },
   { path: '#/services', changefreq: 'monthly', priority: '0.9' },
   { path: '#/work', changefreq: 'monthly', priority: '0.8' },
   { path: '#/about', changefreq: 'yearly', priority: '0.7' },

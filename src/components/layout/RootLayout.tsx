@@ -4,6 +4,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { Footer } from './Footer'
 import { PageTransition } from './PageTransition'
 import { Header } from './Header'
+import { usePageIdentity } from '@/hooks/usePageIdentity'
 
 function RouteFallback() {
   return (
@@ -21,22 +22,36 @@ export function RootLayout() {
   const { pathname, hash } = useLocation()
   const mainRef = useRef<HTMLElement>(null)
   const isFirstRender = useRef(true)
+  const { launcher } = usePageIdentity()
 
   /**
    * HashRouter is not a data router, so scrolling and focus are handled here
    * rather than by <ScrollRestoration />.
    */
   useEffect(() => {
-    if (isFirstRender.current) {
+    if (isFirstRender.current && !hash) {
       isFirstRender.current = false
       return
     }
 
     if (hash) {
-      const target = document.getElementById(hash.replace('#', ''))
-      if (target) {
+      isFirstRender.current = false
+      const scrollToTarget = () => {
+        const target = document.getElementById(hash.replace('#', ''))
+        if (!target) return false
         target.scrollIntoView({ block: 'start' })
-        return
+        return true
+      }
+      if (scrollToTarget()) return
+      // Lazy routes and their entrance transitions may mount after this effect.
+      const observer = new MutationObserver(() => {
+        if (scrollToTarget()) observer.disconnect()
+      })
+      observer.observe(document.getElementById('main')!, { childList: true, subtree: true })
+      const timeout = window.setTimeout(() => observer.disconnect(), 5000)
+      return () => {
+        observer.disconnect()
+        window.clearTimeout(timeout)
       }
     }
 
@@ -65,7 +80,11 @@ export function RootLayout() {
         </ErrorBoundary>
       </main>
 
-      <Footer />
+      {!launcher && (
+        <div data-site-footer>
+          <Footer />
+        </div>
+      )}
     </div>
   )
 }

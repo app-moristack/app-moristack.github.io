@@ -17,6 +17,19 @@ npm run dev               # http://localhost:5173
 
 ## Commands
 
+### Responsive ecosystem launcher
+
+The root route renders the MoriStack launcher at widths up to 767px and the existing
+homepage on larger screens. Explicit routes work at every width: `/#/home` opens
+the preserved homepage and `/#/moristack` opens the launcher. Existing root section
+links continue to open their original homepage sections, including on mobile.
+
+Set `VITE_MORIHOME_URL`, `VITE_MORICAR_URL`, and `VITE_MORIHEALTH_URL` to public app
+destinations in `.env` (and GitHub repository variables for deployment). Without a
+URL, a card is labelled "In development" and opens an inline explanation instead
+of claiming that an application is live. The launcher artwork is optimized WebP;
+its depth and motion effects use CSS and respect reduced-motion preferences.
+
 | Command                 | What it does                                            |
 | ----------------------- | ------------------------------------------------------- |
 | `npm run dev`           | Dev server with hot reload                              |

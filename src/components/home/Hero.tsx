@@ -56,7 +56,7 @@ export function Hero() {
 
             <StaggerItem className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Magnetic className="max-sm:w-full">
-                <ButtonLink to="/#ecosystem" size="lg" className="group max-sm:w-full">
+                <ButtonLink to="/home#ecosystem" size="lg" className="group max-sm:w-full">
                   Explore our ecosystem
                   <ArrowRight
                     size={17}

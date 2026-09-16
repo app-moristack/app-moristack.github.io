@@ -1,5 +1,41 @@
 @import 'tailwindcss';
 
+.mobile-navigation-overlay {
+  background-image: radial-gradient(ellipse at 90% 0%, #12659b30, transparent 65%);
+}
+.mobile-navigation-item {
+  animation: mobile-nav-enter 0.35s both;
+  animation-delay: var(--nav-delay);
+}
+.mobile-navigation-item > a {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  min-height: 58px;
+}
+.mobile-navigation-hub {
+  border: 1px solid #5fd4f740;
+  border-radius: 16px;
+  background: linear-gradient(110deg, #0b3f5e88, #051b2c44);
+  box-shadow: 0 0 28px #29bdf012;
+  margin-bottom: 8px;
+}
+@keyframes mobile-nav-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-navigation-item {
+    animation: none;
+  }
+}
+
 /*
  * MoriStack design tokens.
  * Colours are sampled from the MoriStack logo: a midnight-navy disc holding a

@@ -70,7 +70,7 @@ export function Footer() {
             heading="Ecosystem"
             links={ecosystemProducts.map((product) => ({
               label: product.name,
-              to: `/#${product.slug}`,
+              to: `/home#${product.slug}`,
             }))}
           />
 

@@ -13,7 +13,8 @@ describe('site configuration', () => {
 
   it('exposes every navigation destination the header renders', () => {
     expect(siteConfig.nav.map((link) => link.to)).toEqual([
-      '/#ecosystem',
+      '/moristack',
+      '/home',
       '/services',
       '/work',
       '/about',

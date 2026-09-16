@@ -8,6 +8,7 @@ import { Logo } from '@/components/ui/Logo'
 import { SocialIcon } from '@/components/ui/SocialIcon'
 import { siteConfig, whatsappLink } from '@/data/site.config'
 import { usePrefersReducedMotion } from '@/hooks/useReducedMotion'
+import { usePageIdentity } from '@/hooks/usePageIdentity'
 import { cn } from '@/lib/cn'
 import { DesktopNav } from './DesktopNav'
 import { MobileNav } from './MobileNav'
@@ -19,6 +20,7 @@ export function Header() {
   const toggleRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
+  const { launcher } = usePageIdentity()
   const closeMenu = useCallback(() => setMenuOpen(false), [])
 
   useEffect(() => {
@@ -30,11 +32,12 @@ export function Header() {
 
   useEffect(() => {
     if (!menuOpen) return
+    const toggle = toggleRef.current
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setMenuOpen(false)
-        toggleRef.current?.focus()
+        toggle?.focus()
         return
       }
       if (event.key !== 'Tab' || !panelRef.current) return
@@ -53,13 +56,37 @@ export function Header() {
       }
     }
 
+    const previousOverflow = document.body.style.overflow
+    const background = document.querySelectorAll<HTMLElement>('#main, [data-site-footer]')
+    background.forEach((element) => {
+      element.inert = true
+    })
+    const focusTimer = window.setTimeout(
+      () => panelRef.current?.querySelector<HTMLElement>('button')?.focus(),
+      0,
+    )
+    const desktop = window.matchMedia('(min-width: 1024px)')
+    const onResize = () => {
+      if (desktop.matches) closeMenu()
+    }
+    desktop.addEventListener('change', onResize)
+    window.addEventListener('hashchange', closeMenu)
+    window.addEventListener('popstate', closeMenu)
     document.addEventListener('keydown', onKeyDown)
     document.body.style.overflow = 'hidden'
     return () => {
       document.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = ''
+      document.body.style.overflow = previousOverflow
+      background.forEach((element) => {
+        element.inert = false
+      })
+      window.clearTimeout(focusTimer)
+      desktop.removeEventListener('change', onResize)
+      window.removeEventListener('hashchange', closeMenu)
+      window.removeEventListener('popstate', closeMenu)
+      toggle?.focus()
     }
-  }, [menuOpen])
+  }, [menuOpen, closeMenu])
 
   return (
     <header
@@ -72,7 +99,10 @@ export function Header() {
     >
       <ScrollProgress />
 
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
+      <div
+        inert={menuOpen}
+        className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8"
+      >
         <Link
           to="/"
           aria-label={`${siteConfig.businessName} — home`}
@@ -91,7 +121,10 @@ export function Header() {
               rel="noreferrer noopener"
               aria-label={`Contact ${siteConfig.businessName} on WhatsApp`}
               title={`WhatsApp ${siteConfig.whatsappNumber}`}
-              className="hover:text-turquoise-300 inline-flex size-11 items-center justify-center rounded-full border border-cyan-400/20 bg-navy-800/60 text-turquoise-400 transition-colors hover:border-turquoise-500/45"
+              className={cn(
+                'hover:text-turquoise-300 inline-flex size-11 items-center justify-center rounded-full border border-cyan-400/20 bg-navy-800/60 text-turquoise-400 transition-colors hover:border-turquoise-500/45',
+                launcher && 'max-md:hidden',
+              )}
             >
               <SocialIcon name="whatsapp" size={19} />
             </a>
@@ -109,6 +142,8 @@ export function Header() {
             aria-expanded={menuOpen}
             aria-controls={menuId}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-hidden={menuOpen || undefined}
+            tabIndex={menuOpen ? -1 : 0}
             className="inline-flex size-11 items-center justify-center rounded-full border border-cyan-400/20 bg-navy-800/60 text-ink-100 transition-colors hover:border-turquoise-500/45 lg:hidden"
           >
             {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
@@ -121,12 +156,31 @@ export function Header() {
           <motion.div
             id={menuId}
             ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
             initial={reduced ? false : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduced ? { opacity: 1 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-4 mt-3 overflow-hidden rounded-2xl border border-cyan-400/15 bg-navy-900/97 p-3 shadow-panel backdrop-blur-xl lg:hidden"
+            className="mobile-navigation-overlay fixed inset-0 h-dvh overflow-y-auto bg-navy-950/95 px-6 py-5 backdrop-blur-2xl lg:hidden"
           >
+            <div className="mb-9 flex items-center justify-between">
+              <Logo size={36} />
+              <button
+                type="button"
+                aria-label="Close menu"
+                aria-expanded="true"
+                aria-controls={menuId}
+                onClick={closeMenu}
+                className="grid size-11 cursor-pointer place-items-center rounded-full border border-cyan-400/30 bg-cyan-400/5 text-ink-100"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <p className="mb-5 px-4 text-[10px] tracking-[0.22em] text-cyan-400 uppercase">
+              Your island. Connected.
+            </p>
             <MobileNav onNavigate={closeMenu} />
           </motion.div>
         ) : null}

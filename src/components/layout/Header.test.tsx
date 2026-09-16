@@ -18,7 +18,9 @@ describe('Header', () => {
   it('marks the current route as the active page', () => {
     renderWithRouter(<Header />, ['/services'])
     const nav = screen.getByRole('navigation', { name: 'Main' })
-    expect(within(nav).getByRole('link', { name: 'Solutions' })).toHaveClass('text-turquoise-400')
+    expect(within(nav).getByRole('link', { name: 'Our Services' })).toHaveClass(
+      'text-turquoise-400',
+    )
   })
 
   it('always offers the build call to action', () => {
@@ -26,18 +28,18 @@ describe('Header', () => {
     expect(screen.getAllByRole('link', { name: 'Build with us' }).length).toBeGreaterThan(0)
   })
 
-  it('expands a navigation group to reveal its platforms', async () => {
+  it('expands a navigation group to reveal its solutions', async () => {
     const user = userEvent.setup()
     renderWithRouter(<Header />)
 
-    const toggle = screen.getByRole('button', { name: 'Ecosystem menu' })
+    const toggle = screen.getByRole('button', { name: 'Our Services menu' })
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
 
     await user.click(toggle)
 
     expect(toggle).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByRole('link', { name: /MoriHome/ })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /MoriCar/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Websites/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Web applications/ })).toBeInTheDocument()
   })
 
   it('opens a WhatsApp chat on the configured number', () => {

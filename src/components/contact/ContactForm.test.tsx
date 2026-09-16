@@ -125,6 +125,7 @@ describe('ContactForm submission', () => {
 
   it('announces the outcome to assistive technology', async () => {
     const user = userEvent.setup()
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('Network unavailable')))
     renderWithRouter(<ContactForm />)
 
     await fillValidEnquiry(user)

@@ -78,29 +78,10 @@ export const siteConfig: SiteConfig = {
     { label: 'GitHub', url: null, icon: 'github' },
   ],
   nav: [
+    { label: 'MoriStack', to: '/moristack' },
+    { label: 'Home', to: '/home' },
     {
-      label: 'Ecosystem',
-      to: '/#ecosystem',
-      children: [
-        {
-          label: 'Explore the ecosystem',
-          to: '/#ecosystem',
-          description: 'How the platforms connect',
-        },
-        {
-          label: 'MoriHome',
-          to: '/#morihome',
-          description: 'Construction, renovation and home services',
-        },
-        {
-          label: 'MoriCar',
-          to: '/#moricar',
-          description: 'Cars, showrooms and automotive services',
-        },
-      ],
-    },
-    {
-      label: 'Solutions',
+      label: 'Our Services',
       to: '/services',
       children: [
         {
@@ -126,7 +107,7 @@ export const siteConfig: SiteConfig = {
       ],
     },
     { label: 'Projects', to: '/work' },
-    { label: 'About', to: '/about' },
+    { label: 'About Us', to: '/about' },
     { label: 'Contact', to: '/contact' },
   ],
   contactFormEndpoint: resolvedEndpoint || null,

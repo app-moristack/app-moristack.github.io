@@ -1,7 +1,10 @@
-import { Link, NavLink } from 'react-router'
+import { Link } from 'react-router'
+import { PageNavLink as NavLink } from './PageNavLink'
 import { SocialIcon } from '@/components/ui/SocialIcon'
 import { siteConfig, whatsappLink } from '@/data/site.config'
 import { cn } from '@/lib/cn'
+import type { CSSProperties } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 
 const itemClass = ({ isActive }: { isActive: boolean }) =>
   cn(
@@ -13,10 +16,22 @@ const itemClass = ({ isActive }: { isActive: boolean }) =>
 export function MobileNav({ onNavigate }: { readonly onNavigate: () => void }) {
   return (
     <nav aria-label="Mobile" className="flex flex-col">
-      {siteConfig.nav.map((item) => (
-        <div key={item.to} className="flex flex-col">
-          <NavLink to={item.to} end={item.to === '/'} onClick={onNavigate} className={itemClass}>
+      {siteConfig.nav.map((item, index) => (
+        <div
+          key={item.to}
+          className={cn(
+            'mobile-navigation-item flex flex-col',
+            item.to === '/moristack' && 'mobile-navigation-hub',
+          )}
+          style={{ '--nav-delay': `${index * 45}ms` } as CSSProperties}
+        >
+          <NavLink to={item.to} onClick={onNavigate} className={itemClass}>
             {item.label}
+            {item.to === '/moristack' && (
+              <span className="ml-auto inline-flex items-center gap-2 text-[10px] tracking-wider text-cyan-400 uppercase">
+                Ecosystem <ArrowUpRight size={16} />
+              </span>
+            )}
           </NavLink>
           {item.children ? (
             <div className="mb-1 ml-4 flex flex-col border-l border-cyan-400/12 pl-3">

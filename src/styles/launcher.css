@@ -1,0 +1,526 @@
+.launcher[data-paused='true'] * {
+  animation-play-state: paused !important;
+}
+.launcher {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #03111d;
+  min-height: calc(100svh - 80px);
+  padding: 0 20px 22px;
+  color: #eef7ff;
+}
+.launcher::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at 50% 36%, #0b3358aa, transparent 60%);
+}
+.launcher-layout {
+  max-width: 1120px;
+  margin: auto;
+}
+.launcher-hero {
+  position: relative;
+  text-align: center;
+  padding-top: 12px;
+}
+.launcher-eyebrow {
+  display: none;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a2bfd4;
+}
+.launcher-eyebrow span {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #63d8ff;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 12px #29bdf0;
+}
+.launcher h1 {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(29px, 8.6vw, 42px);
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1.03;
+  margin: 0;
+}
+.launcher h1 > span {
+  color: #62d7ff;
+  text-shadow: 0 0 24px #259bef55;
+}
+.launcher-intro {
+  position: relative;
+  z-index: 2;
+  color: #a8c1d2;
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+.launcher-landscape {
+  position: relative;
+  height: 200px;
+  margin: -7px -32px -18px;
+  perspective: 700px;
+  pointer-events: none;
+  mask-image: linear-gradient(transparent, #000 12%, #000 84%, transparent);
+}
+.launcher-landscape img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  transform: scale(1.04);
+  animation: launcher-drift 10s ease-in-out infinite alternate;
+}
+.launcher-orbit {
+  position: absolute;
+  left: 9%;
+  top: 55%;
+  width: 82%;
+  height: 22%;
+  border: 1px solid #62daff88;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #29bdf044;
+  transform: rotate(-13deg);
+  animation: launcher-pulse 5s ease-in-out infinite;
+}
+.launcher-orbit-two {
+  top: 52%;
+  transform: rotate(12deg);
+  animation-delay: -2.5s;
+}
+.launcher-beacon {
+  position: absolute;
+  left: 28%;
+  top: 61%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d1faff;
+  box-shadow: 0 0 12px 4px #21bfff;
+  animation: launcher-pulse 3s infinite;
+}
+.launcher-island-note {
+  position: absolute;
+  right: 0;
+  bottom: 36px;
+  color: #9cd5e7;
+  text-align: left;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.1;
+  transform: rotate(-8deg);
+  text-shadow: 0 2px 6px #000;
+}
+.launcher-island-note span {
+  padding-left: 8px;
+}
+.launcher-explore {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #75c3ed44;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  background: #0a293a66;
+  color: #a9def2;
+  box-shadow: inset 0 0 10px #63d8ff15;
+}
+.launcher-apps {
+  scroll-margin-top: 90px;
+  position: relative;
+  z-index: 2;
+}
+.launcher-grid-heading {
+  display: none;
+}
+.launcher-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 13px;
+  perspective: 1100px;
+}
+.launcher-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  position: relative;
+  display: block;
+  min-width: 0;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #78b5d74d;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #24465888, #061623 65%, #113447);
+  box-shadow:
+    inset 0 1px 1px #c5eafa66,
+    inset 0 -5px 3px #51b9eb22,
+    0 7px 0 -3px #0c263a,
+    0 9px 0 -4px #348ab688,
+    0 15px 24px -13px #20acff88;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition:
+    transform 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
+  cursor: pointer;
+  animation: launcher-arrive 0.65s both;
+  animation-delay: var(--card-delay);
+  padding: 0;
+  touch-action: manipulation;
+}
+.launcher-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(120deg, #e9faff12, transparent 35%, transparent 70%, #53bce818);
+}
+.launcher-card-art {
+  height: 112px;
+  overflow: hidden;
+  border-radius: 19px 19px 0 0;
+  mask-image: linear-gradient(#000 75%, transparent);
+}
+.launcher-card-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 48%;
+  transition: transform 0.5s;
+}
+.launcher-card-copy {
+  position: relative;
+  z-index: 1;
+  padding: 0 10px 12px;
+  margin-top: -3px;
+}
+.launcher-card-category {
+  display: none;
+}
+.launcher-card h2 {
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+  margin: 0 0 3px;
+}
+.launcher-card-copy p {
+  font-size: 9px;
+  line-height: 1.4;
+  color: #afc5d5;
+  max-width: calc(100% - 12px);
+}
+.launcher-card-status {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 0.04em;
+  color: var(--app-color);
+  margin-top: 7px;
+}
+.launcher-card-arrow {
+  position: absolute;
+  right: 8px;
+  bottom: 10px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #a0d8f433;
+  background: linear-gradient(135deg, #9bdcf02b, #123f5b33);
+  color: #bcdff3;
+  box-shadow: inset 0 1px 0 #d3edff22;
+}
+.launcher-card:focus-visible,
+.launcher-explore:focus-visible {
+  outline: 2px solid var(--app-color, #63d8ff);
+  outline-offset: 5px;
+}
+.launcher-card:active {
+  transform: scale(0.97);
+}
+.launcher-cube-art {
+  height: 112px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+  background: radial-gradient(ellipse, #1b82ca44, transparent 65%);
+}
+.launcher-cube {
+  position: relative;
+  color: #8ddaff;
+  filter: drop-shadow(0 0 10px #128fe9);
+  animation: launcher-float 5s ease-in-out infinite;
+}
+.launcher-cube > svg:first-child {
+  width: 75px;
+  height: 75px;
+}
+.launcher-cube > svg:last-child {
+  position: absolute;
+  top: 26px;
+  left: 26px;
+  color: #cbf2ff;
+}
+.launcher-cube-art > span {
+  position: absolute;
+  bottom: 3px;
+  width: 70%;
+  height: 15px;
+  border-radius: 50%;
+  background: #219eff22;
+  filter: blur(9px);
+}
+.launcher-status {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  margin-top: 24px;
+  border: 1px solid #65caff44;
+  background: #0a2335;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.launcher-status p {
+  color: #adc5d5;
+  margin: 6px 0;
+}
+.launcher-status a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6bdcff;
+}
+.launcher-status button {
+  align-self: flex-start;
+  padding: 8px;
+  cursor: pointer;
+}
+.launcher-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  max-width: 1120px;
+  margin: 30px auto 0;
+  padding-top: 18px;
+  border-top: 1px solid #6accf32b;
+}
+.launcher-footer p {
+  font-size: 7px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #8ba6b8;
+  margin-top: 5px;
+}
+.launcher-footer > a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #a5bccd;
+  font-size: 10px;
+}
+.launcher-footer .text-\[1\.0625rem\] {
+  font-size: 13px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .launcher-card:hover {
+    border-color: var(--app-color);
+    box-shadow:
+      inset 0 1px 1px #c5eafa66,
+      0 8px 0 -4px #193e58,
+      0 18px 35px -16px var(--app-color);
+  }
+  .launcher-card:hover img {
+    transform: scale(1.06);
+  }
+}
+@media (min-width: 400px) and (max-width: 767px) {
+  .launcher-landscape {
+    height: 225px;
+  }
+  .launcher-card-art,
+  .launcher-cube-art {
+    height: 130px;
+  }
+  .launcher-card-copy {
+    padding: 0 13px 14px;
+  }
+  .launcher-card h2 {
+    font-size: 18px;
+  }
+  .launcher-card-copy p {
+    font-size: 10px;
+  }
+}
+@media (min-width: 768px) {
+  .launcher {
+    padding: 26px 32px 28px;
+    min-height: calc(100svh - 96px);
+  }
+  .launcher-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    min-height: 650px;
+  }
+  .launcher-hero {
+    padding-top: 0;
+  }
+  .launcher-eyebrow {
+    display: block;
+    margin-bottom: 28px;
+  }
+  .launcher h1 {
+    font-size: clamp(46px, 5vw, 72px);
+  }
+  .launcher-intro {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 20px;
+  }
+  .launcher-landscape {
+    height: 320px;
+    margin: -10px -65px -35px;
+  }
+  .launcher-island-note {
+    font-size: 23px;
+    right: 0;
+    bottom: 25px;
+  }
+  .launcher-explore {
+    display: none;
+  }
+  .launcher-grid-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    color: #9fb9cc;
+    font-size: 12px;
+  }
+  .launcher-grid-heading > span:last-child {
+    font-size: 8px;
+    letter-spacing: 0.15em;
+  }
+  .launcher-grid {
+    gap: 24px 20px;
+  }
+  .launcher-card-art,
+  .launcher-cube-art {
+    height: 155px;
+  }
+  .launcher-card-copy {
+    padding: 3px 16px 19px;
+  }
+  .launcher-card-category {
+    display: block;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--app-color);
+    margin-bottom: 6px;
+  }
+  .launcher-card h2 {
+    font-size: 21px;
+  }
+  .launcher-card-copy p {
+    font-size: 10px;
+  }
+  .launcher-card-status {
+    font-size: 9px;
+    margin-top: 12px;
+  }
+  .launcher-card-arrow {
+    right: 12px;
+    bottom: 14px;
+    width: 31px;
+    height: 31px;
+  }
+  .launcher-cube > svg:first-child {
+    width: 95px;
+    height: 95px;
+  }
+  .launcher-cube > svg:last-child {
+    top: 37px;
+    left: 37px;
+  }
+  .launcher-footer {
+    margin-top: 20px;
+  }
+  .launcher-footer p {
+    font-size: 9px;
+  }
+  .launcher-footer > a {
+    font-size: 12px;
+  }
+}
+@media (min-width: 1100px) {
+  .launcher-card-art,
+  .launcher-cube-art {
+    height: 190px;
+  }
+  .launcher-layout {
+    gap: 70px;
+  }
+  .launcher-card h2 {
+    font-size: 24px;
+  }
+  .launcher-card-copy p {
+    font-size: 11px;
+  }
+}
+@keyframes launcher-arrive {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes launcher-drift {
+  to {
+    transform: scale(1.09) translateY(-3px);
+  }
+}
+@keyframes launcher-float {
+  50% {
+    transform: translateY(-7px) rotate(3deg);
+  }
+}
+@keyframes launcher-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .launcher *,
+  .launcher *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .launcher-card {
+    transform: none;
+  }
+}
