@@ -26,7 +26,7 @@ links continue to open their original homepage sections, including on mobile.
 
 Set `VITE_MORIHOME_URL`, `VITE_MORICAR_URL`, and `VITE_MORIHEALTH_URL` to public app
 destinations in `.env` (and GitHub repository variables for deployment). Without a
-URL, a card is labelled "In development" and opens an inline explanation instead
+URL, a card is labelled "In development" and flips to show its description instead
 of claiming that an application is live. The launcher artwork is optimized WebP;
 its depth and motion effects use CSS and respect reduced-motion preferences.
 

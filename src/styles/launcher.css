@@ -152,13 +152,31 @@
   perspective: 1100px;
 }
 .launcher-card {
-  --tilt-x: 0deg;
-  --tilt-y: 0deg;
   position: relative;
   display: block;
   min-width: 0;
   width: 100%;
   text-align: left;
+  perspective: 1000px;
+  border-radius: 20px;
+  animation: launcher-arrive 0.65s both;
+  animation-delay: var(--card-delay);
+  touch-action: manipulation;
+}
+.launcher-card-rotor {
+  display: grid;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.launcher-card[data-flipped='true'] .launcher-card-rotor {
+  transform: rotateY(180deg);
+}
+.launcher-card-face {
+  grid-area: 1 / 1;
+  min-width: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   border: 1px solid #78b5d74d;
   border-radius: 20px;
   background: linear-gradient(145deg, #24465888, #061623 65%, #113447);
@@ -168,27 +186,55 @@
     0 7px 0 -3px #0c263a,
     0 9px 0 -4px #348ab688,
     0 15px 24px -13px #20acff88;
-  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   transition:
-    transform 0.25s,
     border-color 0.25s,
     box-shadow 0.25s;
-  cursor: pointer;
-  animation: launcher-arrive 0.65s both;
-  animation-delay: var(--card-delay);
-  padding: 0;
-  touch-action: manipulation;
 }
-.launcher-card::after {
-  content: '';
+.launcher-card-back {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(14px, 3vw, 24px) clamp(12px, 2vw, 22px) 62px;
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      color-mix(in srgb, var(--app-color) 18%, transparent),
+      transparent 80%
+    ),
+    #071e2e;
+}
+.launcher-back-category {
+  color: var(--app-color);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launcher-card-back p {
+  font-size: clamp(11px, 1.1vw, 14px);
+  line-height: 1.65;
+  color: #b7cddd;
+  margin-top: 10px;
+}
+.launcher-back-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  color: #93afc4;
+  margin-top: 18px;
+}
+.launcher-card-flip {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(120deg, #e9faff12, transparent 35%, transparent 70%, #53bce818);
+  z-index: 2;
+  border-radius: 20px;
+  cursor: pointer;
+  background: transparent;
 }
 .launcher-card-art {
-  height: 112px;
+  aspect-ratio: 1;
   overflow: hidden;
   border-radius: 19px 19px 0 0;
   mask-image: linear-gradient(#000 75%, transparent);
@@ -197,9 +243,9 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 50% 48%;
-  transition: transform 0.5s;
+  object-fit: contain;
+  object-position: center;
+  transition: filter 0.5s;
 }
 .launcher-card-copy {
   position: relative;
@@ -231,29 +277,49 @@
   margin-top: 7px;
 }
 .launcher-card-arrow {
+  z-index: 3;
   position: absolute;
   right: 8px;
   bottom: 10px;
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid #a0d8f433;
   background: linear-gradient(135deg, #9bdcf02b, #123f5b33);
   color: #bcdff3;
   box-shadow: inset 0 1px 0 #d3edff22;
 }
-.launcher-card:focus-visible,
+.launcher-card-arrow {
+  cursor: pointer;
+}
+.launcher-card-arrow:hover {
+  border-color: var(--app-color);
+  color: var(--app-color);
+}
+.launcher-link-notice {
+  position: absolute;
+  z-index: 4;
+  right: 8px;
+  bottom: 58px;
+  max-width: calc(100% - 16px);
+  padding: 8px 10px;
+  border: 1px solid var(--app-color);
+  border-radius: 10px;
+  background: #071e2e;
+  color: #eef7ff;
+  font-size: 11px;
+  pointer-events: none;
+}
+.launcher-card-flip:focus-visible,
+.launcher-card-arrow:focus-visible,
 .launcher-explore:focus-visible {
   outline: 2px solid var(--app-color, #63d8ff);
   outline-offset: 5px;
 }
-.launcher-card:active {
-  transform: scale(0.97);
-}
 .launcher-cube-art {
-  height: 112px;
+  aspect-ratio: 1;
   display: grid;
   place-items: center;
   position: relative;
@@ -286,32 +352,6 @@
   background: #219eff22;
   filter: blur(9px);
 }
-.launcher-status {
-  display: flex;
-  gap: 14px;
-  padding: 18px;
-  margin-top: 24px;
-  border: 1px solid #65caff44;
-  background: #0a2335;
-  border-radius: 16px;
-  font-size: 13px;
-  line-height: 1.65;
-}
-.launcher-status p {
-  color: #adc5d5;
-  margin: 6px 0;
-}
-.launcher-status a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #6bdcff;
-}
-.launcher-status button {
-  align-self: flex-start;
-  padding: 8px;
-  cursor: pointer;
-}
 .launcher-footer {
   display: flex;
   justify-content: space-between;
@@ -340,7 +380,7 @@
   font-size: 13px;
 }
 @media (hover: hover) and (pointer: fine) {
-  .launcher-card:hover {
+  .launcher-card:hover .launcher-card-face {
     border-color: var(--app-color);
     box-shadow:
       inset 0 1px 1px #c5eafa66,
@@ -348,16 +388,12 @@
       0 18px 35px -16px var(--app-color);
   }
   .launcher-card:hover img {
-    transform: scale(1.06);
+    filter: brightness(1.08);
   }
 }
 @media (min-width: 400px) and (max-width: 767px) {
   .launcher-landscape {
     height: 225px;
-  }
-  .launcher-card-art,
-  .launcher-cube-art {
-    height: 130px;
   }
   .launcher-card-copy {
     padding: 0 13px 14px;
@@ -424,10 +460,6 @@
   .launcher-grid {
     gap: 24px 20px;
   }
-  .launcher-card-art,
-  .launcher-cube-art {
-    height: 155px;
-  }
   .launcher-card-copy {
     padding: 3px 16px 19px;
   }
@@ -452,8 +484,8 @@
   .launcher-card-arrow {
     right: 12px;
     bottom: 14px;
-    width: 31px;
-    height: 31px;
+    width: 40px;
+    height: 40px;
   }
   .launcher-cube > svg:first-child {
     width: 95px;
@@ -474,10 +506,6 @@
   }
 }
 @media (min-width: 1100px) {
-  .launcher-card-art,
-  .launcher-cube-art {
-    height: 190px;
-  }
   .launcher-layout {
     gap: 70px;
   }

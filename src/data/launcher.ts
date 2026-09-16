@@ -17,17 +17,19 @@ export const launcherApps = [
     image: 'home',
     color: '#ffc56b',
     url: appUrl(import.meta.env.VITE_MORIHOME_URL),
-    description: 'A place to connect with home-service professionals across Mauritius.',
+    description:
+      'Your home. Your next chapter. Buy, sell, find a rental or rent out your property. Connect with professionals to keep your home at its best.',
   },
   {
     id: 'moricar',
     name: 'MoriCar',
-    tagline: 'Buy. Sell. Drive forward.',
+    tagline: 'Buy. Sell. Maintain. Drive.',
     category: 'On the road',
     image: 'car',
     color: '#ff6c85',
     url: appUrl(import.meta.env.VITE_MORICAR_URL),
-    description: 'Cars, showrooms and automotive services, brought together.',
+    description:
+      'Your next car. Your next journey. Buy, sell, rent a car or earn by renting out yours. Find maintenance services to keep you moving.',
   },
   {
     id: 'morihealth',
