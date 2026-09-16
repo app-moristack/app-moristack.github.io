@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Menu, X } from 'lucide-react'
-import { Link, NavLink } from 'react-router'
+import { Link } from 'react-router'
 import { ButtonLink } from '@/components/ui/Button'
 import { ScrollProgress } from '@/components/ui/ScrollProgress'
 import { Logo } from '@/components/ui/Logo'
@@ -9,6 +9,8 @@ import { SocialIcon } from '@/components/ui/SocialIcon'
 import { siteConfig, whatsappLink } from '@/data/site.config'
 import { usePrefersReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from '@/lib/cn'
+import { DesktopNav } from './DesktopNav'
+import { MobileNav } from './MobileNav'
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -79,35 +81,7 @@ export function Header() {
           <Logo size={scrolled ? 34 : 40} />
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-          {siteConfig.nav.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === '/'}
-              className={({ isActive }) =>
-                cn(
-                  'relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
-                  isActive ? 'text-turquoise-400' : 'text-ink-300 hover:text-ink-50',
-                )
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  {link.label}
-                  {isActive ? (
-                    <motion.span
-                      aria-hidden="true"
-                      layoutId={reduced ? undefined : 'nav-active'}
-                      transition={{ type: 'spring', stiffness: 420, damping: 34 }}
-                      className="absolute inset-x-3.5 -bottom-0.5 h-px bg-turquoise-500"
-                    />
-                  ) : null}
-                </>
-              )}
-            </NavLink>
-          ))}
-        </nav>
+        <DesktopNav />
 
         <div className="flex items-center gap-2">
           {whatsappLink ? (
@@ -117,7 +91,7 @@ export function Header() {
               rel="noreferrer noopener"
               aria-label={`Contact ${siteConfig.businessName} on WhatsApp`}
               title={`WhatsApp ${siteConfig.whatsappNumber}`}
-              className="inline-flex size-11 items-center justify-center rounded-full border border-cyan-400/20 bg-navy-800/60 text-turquoise-400 transition-colors hover:border-turquoise-500/45 hover:text-turquoise-300"
+              className="hover:text-turquoise-300 inline-flex size-11 items-center justify-center rounded-full border border-cyan-400/20 bg-navy-800/60 text-turquoise-400 transition-colors hover:border-turquoise-500/45"
             >
               <SocialIcon name="whatsapp" size={19} />
             </a>
@@ -125,7 +99,7 @@ export function Header() {
 
           {/* max-md:hidden, not hidden: only a media-query variant beats the base inline-flex. */}
           <ButtonLink to="/contact" className="max-md:hidden">
-            Request a Quote
+            Build with us
           </ButtonLink>
 
           <button
@@ -153,45 +127,7 @@ export function Header() {
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="mx-4 mt-3 overflow-hidden rounded-2xl border border-cyan-400/15 bg-navy-900/97 p-3 shadow-panel backdrop-blur-xl lg:hidden"
           >
-            <nav aria-label="Mobile" className="flex flex-col">
-              {siteConfig.nav.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  end={link.to === '/'}
-                  onClick={closeMenu}
-                  className={({ isActive }) =>
-                    cn(
-                      'rounded-xl px-4 py-3.5 text-base font-medium transition-colors',
-                      isActive
-                        ? 'bg-turquoise-500/10 text-turquoise-400'
-                        : 'text-ink-200 hover:bg-navy-800/70',
-                    )
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-              <Link
-                to="/contact"
-                onClick={closeMenu}
-                className="mt-2 inline-flex min-h-12 items-center justify-center rounded-xl bg-gradient-to-r from-turquoise-500 to-cyan-500 px-5 text-sm font-semibold text-navy-950"
-              >
-                Request a Quote
-              </Link>
-              {whatsappLink ? (
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  onClick={closeMenu}
-                  className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-turquoise-500/35 px-5 text-sm font-semibold text-turquoise-400"
-                >
-                  <SocialIcon name="whatsapp" size={17} />
-                  WhatsApp {siteConfig.whatsappNumber}
-                </a>
-              ) : null}
-            </nav>
+            <MobileNav onNavigate={closeMenu} />
           </motion.div>
         ) : null}
       </AnimatePresence>

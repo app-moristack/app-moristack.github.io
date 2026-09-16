@@ -10,13 +10,16 @@ import { siteConfig, whatsappLink } from '@/data/site.config'
 export function CallToAction({
   title = (
     <>
-      Ready to build <span className="ms-serif text-turquoise-400">something</span> good?
+      Let&rsquo;s build what&rsquo;s <span className="ms-serif text-turquoise-400">next</span> for
+      Mauritius.
     </>
   ),
-  intro = 'Tell us what you are trying to build or fix. We will come back with a clear plan and a written quote.',
+  intro = 'Whether you are looking for one of our platforms or need technology built for your business, you are in the right place.',
+  primaryLabel = 'Start a project',
 }: {
   readonly title?: ReactNode
   readonly intro?: ReactNode
+  readonly primaryLabel?: string
 }) {
   return (
     <section
@@ -47,7 +50,7 @@ export function CallToAction({
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Magnetic>
               <ButtonLink to="/contact" size="lg" className="group">
-                Request a Free Quote
+                {primaryLabel}
                 <ArrowRight
                   size={17}
                   aria-hidden="true"
@@ -56,7 +59,15 @@ export function CallToAction({
               </ButtonLink>
             </Magnetic>
 
-            <ButtonAnchor href={`mailto:${siteConfig.email}`} size="lg" variant="secondary">
+            <Magnetic strength={0.22}>
+              <ButtonLink to="/#ecosystem" size="lg" variant="secondary">
+                Explore MoriStack
+              </ButtonLink>
+            </Magnetic>
+          </div>
+
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <ButtonAnchor href={`mailto:${siteConfig.email}`} variant="ghost">
               <Mail size={16} aria-hidden="true" />
               {siteConfig.email}
             </ButtonAnchor>
@@ -66,8 +77,7 @@ export function CallToAction({
                 href={whatsappLink}
                 target="_blank"
                 rel="noreferrer noopener"
-                size="lg"
-                variant="secondary"
+                variant="ghost"
               >
                 <MessageCircle size={16} aria-hidden="true" />
                 WhatsApp

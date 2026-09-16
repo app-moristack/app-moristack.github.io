@@ -1,10 +1,14 @@
-export type ProjectStatus = 'Concept' | 'Sample Work' | 'Client Project'
+export type ProjectStatus = 'Concept' | 'Sample Work' | 'Client Project' | 'In Development'
 
 export type ProjectCategory =
-  'Restaurant' | 'Business System' | 'Web Application' | 'Business Website'
+  'Platform' | 'Restaurant' | 'Business System' | 'Web Application' | 'Business Website'
+
+/** Products MoriStack owns and operates, versus work built for a client. */
+export type ProjectKind = 'product' | 'client'
 
 export type Project = {
   readonly slug: string
+  readonly kind: ProjectKind
   readonly title: string
   readonly category: ProjectCategory
   readonly status: ProjectStatus
@@ -21,13 +25,55 @@ export type Project = {
 }
 
 /**
- * Every entry below is a concept built to demonstrate structure and interface
- * decisions. None of them represent a real client engagement, and no results,
+ * Two kinds of entry live here. The `product` entries are MoriStack's own
+ * platforms. The `client` entries are concepts built to demonstrate structure
+ * and interface decisions — none represent a real engagement, and no results,
  * names or figures are attributed to a real business.
  */
 export const projects: readonly Project[] = [
   {
+    slug: 'morihome',
+    kind: 'product',
+    title: 'MoriHome — Home & Construction Platform',
+    category: 'Platform',
+    status: 'In Development',
+    description:
+      'A Mauritian platform connecting people with construction, renovation and home-service professionals.',
+    problem:
+      'Finding a reliable plumber, electrician or mason in Mauritius still runs on word of mouth. Good tradespeople stay invisible outside their own network, and homeowners have no way to compare who actually covers their area.',
+    solution:
+      'Professional profiles with trade, coverage area and the work they take on, searchable by what the visitor needs and where they are. Businesses manage their own listing, so what people see stays current.',
+    outcome:
+      'Gives local professionals a place to be found and gives homeowners one place to look, instead of a group chat and a guess.',
+    technologies: ['React', 'TypeScript', 'Laravel', 'MySQL', 'Tailwind CSS'],
+    screenshot: null,
+    screenshotAlt: 'MoriHome, the MoriStack platform for home and construction professionals',
+    liveUrl: null,
+    sourceUrl: null,
+  },
+  {
+    slug: 'moricar',
+    kind: 'product',
+    title: 'MoriCar — Automotive Marketplace',
+    category: 'Platform',
+    status: 'In Development',
+    description:
+      'An automotive marketplace and services directory for Mauritius, covering private sellers, showrooms and garages.',
+    problem:
+      'Cars are sold across scattered listings, classified pages and social posts. Buyers cannot compare properly, sellers repeat the same advert in five places, and automotive services are harder to find than the cars themselves.',
+    solution:
+      'Structured listings with the specifications buyers actually filter on, seller profiles covering both private sellers and showrooms, and a services side for garages and automotive professionals around the island.',
+    outcome:
+      'Brings buying, selling and servicing into one place, so the search for a car and the search for someone to maintain it share the same map.',
+    technologies: ['React', 'TypeScript', 'Laravel', 'PostgreSQL', 'Redis'],
+    screenshot: null,
+    screenshotAlt: 'MoriCar, the MoriStack automotive marketplace for Mauritius',
+    liveUrl: null,
+    sourceUrl: null,
+  },
+  {
     slug: 'coastal-table-restaurant',
+    kind: 'client',
     title: 'Coastal Table — Restaurant & Digital Menu',
     category: 'Restaurant',
     status: 'Concept',
@@ -47,6 +93,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'operations-management-system',
+    kind: 'client',
     title: 'Operations Management System',
     category: 'Business System',
     status: 'Concept',
@@ -66,6 +113,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'membership-attendance-platform',
+    kind: 'client',
     title: 'Membership & Attendance Platform',
     category: 'Web Application',
     status: 'Concept',
@@ -85,6 +133,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'professional-services-site',
+    kind: 'client',
     title: 'Professional Services Website',
     category: 'Business Website',
     status: 'Concept',
@@ -105,10 +154,19 @@ export const projects: readonly Project[] = [
 ]
 
 export const projectCategories: readonly ProjectCategory[] = [
+  'Platform',
   'Restaurant',
   'Business System',
   'Web Application',
   'Business Website',
 ]
 
-export const featuredProjects = projects.slice(0, 3)
+export const moristackProducts = projects.filter((project) => project.kind === 'product')
+
+export const clientProjects = projects.filter((project) => project.kind === 'client')
+
+/**
+ * The home page preview. Order in `projects` is the curated order, newest
+ * first, so the head of the list is what the home page shows.
+ */
+export const latestProject = projects[0]

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#03111d" />
 
-    <title>MoriStack | Website &amp; Web App Development in Mauritius</title>
+    <title>MoriStack | Mauritian Technology Company &amp; Digital Platforms</title>
     <meta
       name="description"
-      content="MoriStack creates modern websites and custom web applications for businesses in Mauritius using React, Vue.js and mobile-first design."
+      content="MoriStack is a Mauritian technology company building digital platforms that connect Mauritius, and developing websites, web applications and business systems for local companies."
     />
     <meta name="author" content="MoriStack" />
 
@@ -21,11 +21,11 @@
     <meta property="og:site_name" content="MoriStack" />
     <meta
       property="og:title"
-      content="MoriStack | Website &amp; Web App Development in Mauritius"
+      content="MoriStack | Mauritian Technology Company &amp; Digital Platforms"
     />
     <meta
       property="og:description"
-      content="MoriStack creates modern websites and custom web applications for businesses in Mauritius using React, Vue.js and mobile-first design."
+      content="MoriStack is a Mauritian technology company building digital platforms that connect Mauritius, and developing websites, web applications and business systems for local companies."
     />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -47,28 +47,65 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "MoriStack",
-        "description": "Freelance web development studio building modern websites and custom web applications for businesses in Mauritius.",
-        "email": "moristack@gmail.com",
-        "areaServed": { "@type": "Country", "name": "Mauritius" },
-        "address": { "@type": "PostalAddress", "addressCountry": "MU" },
-        "knowsAbout": [
-          "Web development",
-          "React",
-          "Vue.js",
-          "TypeScript",
-          "Business web applications",
-          "Restaurant websites",
-          "Booking systems"
-        ],
-        "serviceType": [
-          "Business Websites",
-          "Custom Web Applications",
-          "Restaurant Websites and Digital Menus",
-          "Booking and Appointment Systems",
-          "Business Management Systems",
-          "Website Redesign and Maintenance"
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://app-moristack.github.io/#organization",
+            "name": "MoriStack",
+            "slogan": "Building a more connected Mauritius",
+            "description": "Mauritian technology company building digital platforms that connect people, businesses and services across Mauritius, and developing websites, web applications and business systems for local companies.",
+            "email": "moristack@gmail.com",
+            "areaServed": {
+              "@type": "Country",
+              "name": "Mauritius"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "MU"
+            },
+            "knowsAbout": [
+              "Technology company Mauritius",
+              "Web development Mauritius",
+              "Web application development Mauritius",
+              "Software development Mauritius",
+              "Digital platforms Mauritius",
+              "Business software Mauritius"
+            ],
+            "owns": [
+              {
+                "@type": "Product",
+                "name": "MoriHome",
+                "description": "Platform connecting people in Mauritius with construction, renovation and home-service professionals."
+              },
+              {
+                "@type": "Product",
+                "name": "MoriCar",
+                "description": "Automotive marketplace and services ecosystem for Mauritius."
+              }
+            ]
+          },
+          {
+            "@type": "ProfessionalService",
+            "name": "MoriStack",
+            "parentOrganization": {
+              "@id": "https://app-moristack.github.io/#organization"
+            },
+            "description": "Websites, web applications, business management systems and custom platforms built in Mauritius.",
+            "areaServed": {
+              "@type": "Country",
+              "name": "Mauritius"
+            },
+            "serviceType": [
+              "Business Websites",
+              "Custom Web Applications",
+              "Business Management Systems",
+              "Booking and Appointment Systems",
+              "Custom Platforms",
+              "API and System Integrations",
+              "Restaurant Websites and Digital Menus",
+              "Existing System Modernisation"
+            ]
+          }
         ]
       }
     </script>
@@ -85,6 +122,7 @@
     <noscript>
       <div style="padding: 2rem; color: #e9f3fa; font-family: system-ui, sans-serif">
         <h1>MoriStack</h1>
+        <p>Building a more connected Mauritius.</p>
         <p>
           This site needs JavaScript to run. Please enable it, or email
           <a style="color: #22e5ae" href="mailto:moristack@gmail.com">moristack@gmail.com</a>.

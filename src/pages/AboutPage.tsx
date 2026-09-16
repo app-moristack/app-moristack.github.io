@@ -4,6 +4,7 @@ import { Seo } from '@/components/Seo'
 import { Logo } from '@/components/ui/Logo'
 import { Reveal } from '@/components/ui/Reveal'
 import { Container, Eyebrow, Section, SectionHeading } from '@/components/ui/Section'
+import { Stagger, StaggerItem } from '@/components/ui/Stagger'
 import { aboutPoints, processSteps } from '@/data/content'
 import { siteConfig } from '@/data/site.config'
 
@@ -11,8 +12,8 @@ export default function AboutPage() {
   return (
     <>
       <Seo
-        title="About | Freelance Web Development Studio in Mauritius | MoriStack"
-        description="MoriStack is a Mauritius-based freelance web development studio building modern React and Vue.js websites and business applications with direct, personal service."
+        title="About | A Mauritian Technology Company | MoriStack"
+        description="MoriStack is a Mauritian technology company building a growing ecosystem of local digital platforms alongside websites, web applications and business systems for companies in Mauritius."
       />
 
       <header className="relative overflow-hidden py-14 sm:py-20">
@@ -21,28 +22,70 @@ export default function AboutPage() {
           <div className="max-w-2xl">
             <Eyebrow>About</Eyebrow>
             <h1 className="mt-4 text-4xl font-extrabold sm:text-5xl">
-              A freelance development studio,{' '}
-              <span className="ms-gradient-text">based in Mauritius</span>
+              A technology company, <span className="ms-gradient-text">built in Mauritius</span>
             </h1>
             <p className="mt-5 text-base leading-relaxed text-ink-300 sm:text-lg">
-              {siteConfig.businessName} is a freelance web development studio. That means you work
-              directly with the person designing and building your project — no layers, no
-              hand-offs, no guessing who to call when something needs changing.
+              {siteConfig.businessName} builds digital platforms for Mauritius, and the technology
+              Mauritian businesses need to grow. Both come from the same place: useful software,
+              built properly.
             </p>
             <p className="mt-4 inline-flex items-center gap-2 text-sm text-ink-400">
               <MapPin size={15} aria-hidden="true" className="text-turquoise-500" />
-              Working with businesses across {siteConfig.location}
+              Working across {siteConfig.location}
             </p>
           </div>
         </Container>
       </header>
 
-      <Section labelledBy="approach-heading" className="pt-0">
+      <Section labelledBy="story-heading" className="pt-0">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+          <Reveal direction="right">
+            <Eyebrow>Our story</Eyebrow>
+            <h2 id="story-heading" className="mt-5 text-section font-extrabold text-balance">
+              It started with better software. It grew into an{' '}
+              <span className="ms-serif text-turquoise-400">ecosystem</span>.
+            </h2>
+          </Reveal>
+
+          <Stagger stagger={0.07} className="space-y-4 text-lead text-ink-400">
+            <StaggerItem as="p">
+              MoriStack began with a simple idea: build better digital products.
+            </StaggerItem>
+            <StaggerItem as="p">
+              But while working with businesses &mdash; and looking at everyday life in Mauritius
+              &mdash; we kept seeing the same thing. Useful services, skilled professionals and real
+              opportunities were all here, and all difficult to find. The island is small; the
+              information about it is scattered.
+            </StaggerItem>
+            <StaggerItem as="p">So MoriStack evolved.</StaggerItem>
+            <StaggerItem as="p">
+              Today we are building a growing ecosystem of Mauritian digital platforms designed to
+              connect people, businesses and services.{' '}
+              <strong className="font-semibold text-ink-100">MoriHome</strong> connects Mauritius
+              around the home. <strong className="font-semibold text-ink-100">MoriCar</strong>{' '}
+              connects Mauritius around mobility and automotive services. Both are early, and both
+              are only the beginning.
+            </StaggerItem>
+            <StaggerItem as="p">
+              Alongside our own products, we continue helping businesses design and build modern
+              websites, applications and internal systems &mdash; held to exactly the same standard,
+              because we have to live with the code we write.
+            </StaggerItem>
+            <StaggerItem>
+              <p className="border-l-2 border-turquoise-500/55 pl-5 text-lead font-semibold text-ink-100">
+                Useful technology. Built properly. Built for Mauritius.
+              </p>
+            </StaggerItem>
+          </Stagger>
+        </div>
+      </Section>
+
+      <Section labelledBy="approach-heading">
         <SectionHeading
           id="approach-heading"
-          eyebrow="How we work"
-          title="Understand the business first, then write the code"
-          intro="The best technical decision is usually the one that comes after a proper conversation about how your business actually runs."
+          eyebrow="What guides us"
+          title="The same principles, whoever the product is for"
+          intro="Whether we are building our own platform or a system for your business, the decisions are made the same way."
         />
 
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -87,8 +130,11 @@ export default function AboutPage() {
                 as finished work.
               </p>
               <p>
-                The accountability does not change. If something breaks, you have one person to
-                call, and that person knows exactly how the system was built.
+                What it does not do is make the architectural calls. Which trade-off survives
+                contact with real users, how a system should be split, what will still be
+                maintainable in three years &mdash; that comes from experience, and the
+                accountability stays with us. If something breaks, you have someone to call who
+                knows exactly how the system was built.
               </p>
             </div>
           </Reveal>
@@ -100,6 +146,7 @@ export default function AboutPage() {
           id="about-process-heading"
           eyebrow="The project"
           title="What working together looks like"
+          intro="The same five stages we run our own platform builds through."
         />
 
         <ol className="mx-auto max-w-2xl space-y-3">
@@ -132,7 +179,7 @@ export default function AboutPage() {
       </Section>
 
       <CallToAction
-        title="Let's talk about your project"
+        title="Let's talk about what you want to build"
         intro="A short conversation is usually enough to tell whether we are a good fit. There is no cost and no obligation."
       />
     </>

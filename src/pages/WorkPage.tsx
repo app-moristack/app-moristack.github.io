@@ -5,7 +5,12 @@ import { Seo } from '@/components/Seo'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { Reveal } from '@/components/ui/Reveal'
 import { Container, Eyebrow, Section } from '@/components/ui/Section'
-import { projectCategories, projects, type ProjectCategory } from '@/data/projects'
+import {
+  clientProjects,
+  moristackProducts,
+  projectCategories,
+  type ProjectCategory,
+} from '@/data/projects'
 import { cn } from '@/lib/cn'
 
 type Filter = ProjectCategory | 'All'
@@ -14,48 +19,68 @@ export default function WorkPage() {
   const [filter, setFilter] = useState<Filter>('All')
 
   const visible = useMemo(
-    () => (filter === 'All' ? projects : projects.filter((p) => p.category === filter)),
+    () => (filter === 'All' ? clientProjects : clientProjects.filter((p) => p.category === filter)),
     [filter],
   )
 
-  const filters: readonly Filter[] = ['All', ...projectCategories]
+  const filters: readonly Filter[] = [
+    'All',
+    ...projectCategories.filter((category) =>
+      clientProjects.some((project) => project.category === category),
+    ),
+  ]
 
   return (
     <>
       <Seo
-        title="Our Work | Web Development Concepts | MoriStack"
-        description="Concept projects from MoriStack showing how we structure restaurant websites, business management systems and membership platforms."
+        title="Projects | MoriStack Products & Client Work | MoriStack"
+        description="MoriHome and MoriCar, the digital platforms MoriStack builds and runs in Mauritius, alongside concept projects showing how we structure client websites, business systems and web applications."
       />
 
       <header className="relative overflow-hidden py-14 sm:py-20">
         <div aria-hidden="true" className="ms-grid-backdrop absolute inset-0 -z-10 opacity-60" />
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow>Our work</Eyebrow>
+            <Eyebrow>Projects</Eyebrow>
             <h1 className="mt-4 text-4xl font-extrabold sm:text-5xl">
-              How we <span className="ms-gradient-text">approach a project</span>
+              Products &amp; work we&rsquo;ve <span className="ms-gradient-text">built</span>
             </h1>
             <p className="mt-5 text-base leading-relaxed text-ink-300 sm:text-lg">
-              Each entry sets out the problem, what was built to solve it, and what the result
-              demonstrates.
-            </p>
-          </div>
-
-          <div className="mt-8 flex max-w-2xl items-start gap-3 rounded-xl border border-cyan-400/20 bg-cyan-500/5 p-4">
-            <Info size={17} aria-hidden="true" className="mt-0.5 shrink-0 text-cyan-400" />
-            <p className="text-sm leading-relaxed text-ink-300">
-              Everything shown here is a concept project built to demonstrate our approach. These
-              are not commercial engagements, and no client names, testimonials or business results
-              are attached to them.
+              The platforms MoriStack owns and operates, and the client projects that show how we
+              structure a build. Each entry sets out the problem, what was built to solve it, and
+              what the result demonstrates.
             </p>
           </div>
         </Container>
       </header>
 
-      <Section labelledBy="projects-heading" className="pt-0">
-        <h2 id="projects-heading" className="sr-only">
-          Project list
+      <Section labelledBy="products-heading" className="pt-0">
+        <h2 id="products-heading" className="ms-rule-label mb-8">
+          MoriStack products
         </h2>
+
+        <div className="grid gap-5">
+          {moristackProducts.map((project, index) => (
+            <Reveal key={project.slug} delay={index * 0.06}>
+              <ProjectCard project={project} variant="flagship" />
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      <Section labelledBy="projects-heading" className="pt-0">
+        <h2 id="projects-heading" className="ms-rule-label mb-8">
+          Client work
+        </h2>
+
+        <div className="mb-9 flex max-w-2xl items-start gap-3 rounded-xl border border-cyan-400/20 bg-cyan-500/5 p-4">
+          <Info size={17} aria-hidden="true" className="mt-0.5 shrink-0 text-cyan-400" />
+          <p className="text-sm leading-relaxed text-ink-300">
+            The projects below are concept projects built to demonstrate our approach. They are not
+            commercial engagements, and no client names, testimonials or business results are
+            attached to them.
+          </p>
+        </div>
 
         <div
           role="group"
@@ -111,6 +136,7 @@ export default function WorkPage() {
       <CallToAction
         title="Want something like this for your business?"
         intro="Tell us about your project and we will explain how we would approach it."
+        primaryLabel="Start a project"
       />
     </>
   )

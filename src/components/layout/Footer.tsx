@@ -1,67 +1,85 @@
-import { Mail, MapPin } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import { Link } from 'react-router'
 import { Container } from '@/components/ui/Section'
 import { Logo } from '@/components/ui/Logo'
 import { SocialIcon } from '@/components/ui/SocialIcon'
-import { services } from '@/data/services'
+import { ecosystemProducts } from '@/data/ecosystem'
 import { activeSocials, siteConfig, whatsappLink } from '@/data/site.config'
+
+const solutions = [
+  { label: 'Websites', to: '/services#business-websites' },
+  { label: 'Web Applications', to: '/services#web-applications' },
+  { label: 'Business Systems', to: '/services#management-systems' },
+  { label: 'Custom Development', to: '/services#custom-platforms' },
+]
+
+const company = [
+  { label: 'About', to: '/about' },
+  { label: 'Projects', to: '/work' },
+  { label: 'Contact', to: '/contact' },
+]
+
+function FooterColumn({
+  heading,
+  links,
+}: {
+  readonly heading: string
+  readonly links: readonly { label: string; to: string }[]
+}) {
+  const headingId = `footer-${heading.toLowerCase().replace(/\s+/g, '-')}`
+
+  return (
+    <nav aria-labelledby={headingId}>
+      <h2 id={headingId} className="text-xs font-bold tracking-[0.18em] text-ink-50 uppercase">
+        {heading}
+      </h2>
+      <ul className="mt-4 space-y-2.5">
+        {links.map((link) => (
+          <li key={link.to}>
+            <Link
+              to={link.to}
+              className="text-sm text-ink-400 transition-colors hover:text-turquoise-400"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 export function Footer() {
   return (
     <footer className="relative mt-8 border-t border-cyan-400/10 bg-navy-950">
       <div aria-hidden="true" className="ms-hairline absolute inset-x-0 top-0 h-px" />
       <Container className="py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
           <div>
             <Logo size={42} />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-400">
-              A freelance web development studio building modern websites and custom web
-              applications for businesses in Mauritius.
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-300">
+              {siteConfig.tagline}.
             </p>
-            <p className="mt-4 inline-flex items-center gap-2 text-sm text-ink-300">
-              <MapPin size={15} aria-hidden="true" className="text-turquoise-500" />
-              Based in {siteConfig.location}
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-500">
+              A Mauritian technology company building its own digital platforms, and the systems
+              local businesses run on.
             </p>
           </div>
 
-          <nav aria-labelledby="footer-nav-heading">
-            <h2 id="footer-nav-heading" className="text-sm font-semibold text-ink-50">
-              Navigation
-            </h2>
-            <ul className="mt-4 space-y-2.5">
-              {siteConfig.nav.map((link) => (
-                <li key={link.to}>
-                  <Link
-                    to={link.to}
-                    className="text-sm text-ink-400 transition-colors hover:text-turquoise-400"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <FooterColumn
+            heading="Ecosystem"
+            links={ecosystemProducts.map((product) => ({
+              label: product.name,
+              to: `/#${product.slug}`,
+            }))}
+          />
 
-          <nav aria-labelledby="footer-services-heading">
-            <h2 id="footer-services-heading" className="text-sm font-semibold text-ink-50">
-              Services
-            </h2>
-            <ul className="mt-4 space-y-2.5">
-              {services.map((service) => (
-                <li key={service.slug}>
-                  <Link
-                    to={`/services#${service.slug}`}
-                    className="text-sm text-ink-400 transition-colors hover:text-turquoise-400"
-                  >
-                    {service.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <FooterColumn heading="Solutions" links={solutions} />
+
+          <FooterColumn heading="Company" links={company} />
 
           <div>
-            <h2 className="text-sm font-semibold text-ink-50">Get in touch</h2>
+            <h2 className="text-xs font-bold tracking-[0.18em] text-ink-50 uppercase">Connect</h2>
             <a
               href={`mailto:${siteConfig.email}`}
               className="mt-4 inline-flex items-center gap-2 text-sm text-ink-300 transition-colors hover:text-turquoise-400"
@@ -114,6 +132,9 @@ export function Footer() {
         <div className="mt-12 flex flex-col gap-3 border-t border-cyan-400/10 pt-6 text-sm text-ink-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.businessName}. All rights reserved.
+          </p>
+          <p className="font-medium text-ink-400">
+            Built in Mauritius <span aria-hidden="true">🇲🇺</span>
           </p>
           <Link to="/privacy" className="transition-colors hover:text-turquoise-400">
             Privacy Policy

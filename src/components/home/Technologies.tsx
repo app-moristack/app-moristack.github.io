@@ -13,10 +13,10 @@ export function Technologies() {
         eyebrow="Technology"
         title={
           <>
-            Built on tools that stay <span className="ms-serif text-cyan-400">maintainable</span>
+            Built on technology that can <span className="ms-serif text-cyan-400">grow</span>.
           </>
         }
-        intro="We choose established, well-supported technology so your project can be extended in two years, not rewritten."
+        intro="Technology is chosen for the problem in front of us, not for what is fashionable. Everything below is something we run in production ourselves before we put it near your project."
       />
 
       <TechTicker />

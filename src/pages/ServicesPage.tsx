@@ -23,25 +23,26 @@ export default function ServicesPage() {
   return (
     <>
       <Seo
-        title="Services | Web Development & Custom Web Apps | MoriStack"
-        description="Business websites, custom web applications, restaurant websites and digital menus, booking platforms, management systems, redesign and maintenance — built in Mauritius."
+        title="Solutions | Web & Software Development in Mauritius | MoriStack"
+        description="Websites, custom web applications, business management systems, booking platforms, custom platforms, API integrations, restaurant websites and system modernisation — engineered in Mauritius by MoriStack."
       />
 
       <header className="relative overflow-hidden py-14 sm:py-20">
         <div aria-hidden="true" className="ms-grid-backdrop absolute inset-0 -z-10 opacity-60" />
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow>Services</Eyebrow>
+            <Eyebrow>Solutions</Eyebrow>
             <h1 className="mt-4 text-4xl font-extrabold sm:text-5xl">
-              Built around <span className="ms-gradient-text">what your business needs</span>
+              Technology for <span className="ms-gradient-text">Mauritian businesses</span>
             </h1>
             <p className="mt-5 text-base leading-relaxed text-ink-300 sm:text-lg">
-              Every service below starts the same way: understanding the problem you are actually
-              trying to solve, then choosing the simplest thing that solves it well.
+              The engineering behind MoriStack&rsquo;s own platforms, applied to your business.
+              Every solution below starts the same way: understanding the problem you are actually
+              trying to solve, then building the simplest thing that solves it well.
             </p>
           </div>
 
-          <nav aria-label="Services on this page" className="mt-9">
+          <nav aria-label="Solutions on this page" className="mt-9">
             <ul className="flex flex-wrap gap-2">
               {services.map((service) => (
                 <li key={service.slug}>
@@ -152,15 +153,6 @@ export default function ServicesPage() {
           </div>
         </Section>
       ))}
-
-      <Container>
-        <p className="rounded-xl border border-cyan-400/15 bg-navy-900/60 p-5 text-sm leading-relaxed text-ink-400">
-          <strong className="text-ink-200 font-semibold">A note on this website.</strong> The site
-          you are reading is a static application with no backend, so it does not itself run a
-          booking calendar or a management system. Those are built as separate applications for
-          clients, with the server-side components each one requires.
-        </p>
-      </Container>
 
       <CallToAction
         title="Not sure which one you need?"

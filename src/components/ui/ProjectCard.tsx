@@ -9,15 +9,38 @@ const statusStyles: Record<Project['status'], string> = {
   Concept: 'border-cyan-400/30 bg-cyan-500/10 text-cyan-400',
   'Sample Work': 'border-turquoise-500/30 bg-turquoise-500/10 text-turquoise-400',
   'Client Project': 'border-coral-500/30 bg-coral-500/10 text-coral-400',
+  'In Development': 'border-turquoise-500/40 bg-turquoise-500/12 text-turquoise-400',
 }
 
-export function ProjectCard({ project }: { readonly project: Project }) {
+/**
+ * `flagship` is the MoriStack-product treatment: a wider card with a larger
+ * headline, so an owned platform never sits at the same weight as a concept.
+ */
+export function ProjectCard({
+  project,
+  variant = 'default',
+}: {
+  readonly project: Project
+  readonly variant?: 'default' | 'flagship'
+}) {
+  const flagship = variant === 'flagship'
+
   return (
     <Spotlight
       as="article"
-      className="ms-panel group flex h-full flex-col overflow-hidden transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:border-turquoise-500/35 hover:shadow-lift"
+      className={cn(
+        'ms-panel group flex h-full flex-col overflow-hidden transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-lift',
+        flagship
+          ? 'border-turquoise-500/25 hover:border-turquoise-500/45'
+          : 'hover:border-turquoise-500/35',
+      )}
     >
-      <div className="relative aspect-16/10 overflow-hidden bg-navy-800/70">
+      <div
+        className={cn(
+          'relative overflow-hidden bg-navy-800/70',
+          flagship ? 'aspect-21/9' : 'aspect-16/10',
+        )}
+      >
         {project.screenshot ? (
           <img
             src={assetUrl(project.screenshot)}
@@ -45,14 +68,30 @@ export function ProjectCard({ project }: { readonly project: Project }) {
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
+      <div className={cn('flex flex-1 flex-col p-6', flagship && 'sm:p-8')}>
         <p className="text-xs font-semibold tracking-[0.14em] text-ink-500 uppercase">
           {project.category}
         </p>
-        <h3 className="mt-2 text-lg font-bold text-ink-50">{project.title}</h3>
-        <p className="mt-2.5 text-sm leading-relaxed text-ink-400">{project.description}</p>
+        <h3
+          className={cn('mt-2 font-bold text-ink-50', flagship ? 'text-xl sm:text-2xl' : 'text-lg')}
+        >
+          {project.title}
+        </h3>
+        <p
+          className={cn(
+            'mt-2.5 leading-relaxed text-ink-400',
+            flagship ? 'max-w-2xl text-base' : 'text-sm',
+          )}
+        >
+          {project.description}
+        </p>
 
-        <dl className="mt-5 space-y-3 border-t border-cyan-400/10 pt-5 text-sm">
+        <dl
+          className={cn(
+            'mt-5 space-y-3 border-t border-cyan-400/10 pt-5 text-sm',
+            flagship && 'sm:grid sm:grid-cols-3 sm:gap-6 sm:space-y-0',
+          )}
+        >
           <div>
             <dt className="text-xs font-bold tracking-[0.12em] text-coral-400 uppercase">
               Problem

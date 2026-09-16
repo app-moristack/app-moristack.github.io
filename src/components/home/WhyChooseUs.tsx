@@ -11,13 +11,18 @@ export function WhyChooseUs() {
         eyebrow="Why MoriStack"
         title={
           <>
-            You are not buying a <span className="ms-serif text-coral-400">template</span>.
+            You are not buying code. You are building a{' '}
+            <span className="ms-serif text-coral-400">product</span>.
           </>
         }
-        intro="You work directly with the person who designs, builds and supports what you launch — and that changes what you get."
+        intro="Every engagement runs the way our own platforms are built: understand the problem, design the solution, then engineer something that is still standing in three years."
       />
 
-      <Stagger as="ul" stagger={0.05} className="grid gap-x-12 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+      <Stagger
+        as="ul"
+        stagger={0.05}
+        className="grid gap-x-12 gap-y-9 sm:grid-cols-2 lg:grid-cols-3"
+      >
         {whyChooseUs.map((item, index) => (
           <StaggerItem as="li" key={item.title} className="group">
             <span

@@ -1,11 +1,11 @@
 import { CallToAction } from '@/components/CallToAction'
 import { Seo } from '@/components/Seo'
-import { FeaturedWork } from '@/components/home/FeaturedWork'
+import { Ecosystem } from '@/components/home/Ecosystem'
+import { ForBusinesses } from '@/components/home/ForBusinesses'
 import { Hero } from '@/components/home/Hero'
 import { ProblemsWeSolve } from '@/components/home/ProblemsWeSolve'
 import { ProcessTimeline } from '@/components/home/ProcessTimeline'
-import { RestaurantShowcase } from '@/components/home/RestaurantShowcase'
-import { ServicesIntro } from '@/components/home/ServicesIntro'
+import { SelectedWork } from '@/components/home/SelectedWork'
 import { Technologies } from '@/components/home/Technologies'
 import { WhyChooseUs } from '@/components/home/WhyChooseUs'
 import { ServiceRow } from '@/components/ui/ServiceRow'
@@ -17,14 +17,16 @@ export default function HomePage() {
   return (
     <>
       <Seo
-        title="MoriStack | Website & Web App Development in Mauritius"
-        description="MoriStack creates modern websites and custom web applications for businesses in Mauritius using React, Vue.js and mobile-first design."
+        title="MoriStack | Mauritian Technology Company & Digital Platforms"
+        description="MoriStack builds digital platforms that connect Mauritius — MoriHome and MoriCar — and develops websites, web applications and business systems for companies across the island."
       />
 
       <Hero />
 
+      <Ecosystem />
+
       <Section labelledBy="services-heading">
-        <ServicesIntro headingId="services-heading" />
+        <ForBusinesses headingId="services-heading" />
 
         <Stagger stagger={0.06} className="border-b border-cyan-400/12">
           {services.map((service, index) => (
@@ -36,10 +38,9 @@ export default function HomePage() {
       </Section>
 
       <ProblemsWeSolve />
-      <RestaurantShowcase />
       <WhyChooseUs />
       <ProcessTimeline />
-      <FeaturedWork />
+      <SelectedWork />
       <Technologies />
       <CallToAction />
     </>

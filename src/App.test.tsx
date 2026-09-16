@@ -19,16 +19,16 @@ describe('routing', () => {
     expect(
       await screen.findByRole(
         'heading',
-        { level: 1, name: /Digital experiences, engineered in Mauritius/i },
+        { level: 1, name: /Building a more connected Mauritius/i },
         LAZY_ROUTE,
       ),
     ).toBeInTheDocument()
   })
 
   it.each([
-    ['/services', /Built around what your business needs/i],
-    ['/work', /How we approach a project/i],
-    ['/about', /A freelance development studio/i],
+    ['/services', /Technology for Mauritian businesses/i],
+    ['/work', /Products & work we.ve built/i],
+    ['/about', /A technology company, built in Mauritius/i],
     ['/contact', /Request a free quote/i],
     ['/privacy', /Privacy Policy/i],
   ])('renders %s', async (path, heading) => {

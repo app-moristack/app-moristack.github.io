@@ -27,7 +27,7 @@ export function ProcessTimeline() {
             A clear <span className="ms-serif text-cyan-400">five-step</span> process
           </>
         }
-        intro="You always know what stage the project is at, what happens next, and what is expected from you."
+        intro="The same five stages whether we are building a client system or the next platform in our own ecosystem. You always know what stage the project is at and what happens next."
       />
 
       <div ref={railRef} className="relative">
@@ -48,7 +48,7 @@ export function ProcessTimeline() {
             >
               <span
                 aria-hidden="true"
-                className="relative z-10 inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-turquoise-500/30 bg-navy-900 text-turquoise-400 shadow-[0_0_0_6px_rgba(3,17,29,1)] transition-[border-color,color,transform] duration-300 hover:scale-105 hover:border-turquoise-400 hover:text-turquoise-300"
+                className="hover:text-turquoise-300 relative z-10 inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-turquoise-500/30 bg-navy-900 text-turquoise-400 shadow-[0_0_0_6px_rgba(3,17,29,1)] transition-[border-color,color,transform] duration-300 hover:scale-105 hover:border-turquoise-400"
               >
                 <step.icon size={20} />
               </span>

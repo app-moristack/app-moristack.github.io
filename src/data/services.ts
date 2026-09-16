@@ -1,9 +1,11 @@
 import type { LucideIcon } from 'lucide-react'
 import {
+  Blocks,
   CalendarCheck,
   LayoutDashboard,
   LifeBuoy,
   Monitor,
+  Plug,
   RefreshCw,
   UtensilsCrossed,
 } from 'lucide-react'
@@ -77,6 +79,109 @@ export const services: readonly Service[] = [
     accent: 'cyan',
   },
   {
+    slug: 'management-systems',
+    title: 'Business Management Systems',
+    icon: LifeBuoy,
+    summary:
+      'Stock, clients, jobs, staff and reporting in one place, built for how your business actually operates.',
+    audience: 'Small and medium businesses whose processes do not fit an off-the-shelf product.',
+    problem:
+      'Generic software forces you to change how you work, or you bend spreadsheets until they break. Neither gives you a reliable view of the business.',
+    includes: [
+      'Client and supplier records',
+      'Stock, job or project tracking',
+      'Staff access with the right permissions per role',
+      'Document and history trails',
+      'Reports that answer your specific questions',
+    ],
+    benefits: [
+      'Software that matches your process, not the reverse',
+      'Decisions based on current numbers',
+      'Less time spent chasing information internally',
+      'A system that can grow with new requirements',
+    ],
+    cta: 'Scope a management system',
+    accent: 'cyan',
+  },
+  {
+    slug: 'booking-systems',
+    title: 'Booking & Appointment Systems',
+    icon: CalendarCheck,
+    summary:
+      'Let customers request appointments online, and stop losing bookings written on a notepad.',
+    audience:
+      'Clinics, salons, studios, consultants, tradespeople and anyone whose day is a schedule.',
+    problem:
+      'Bookings arrive by call, message and walk-in. Double-bookings happen, no-shows go unrecorded, and nobody can see the real picture of next week.',
+    includes: [
+      'Appointment requests submitted online',
+      'Availability displays',
+      'Service and duration selection',
+      'Customer information collection',
+      'Confirmation workflows and reminders',
+    ],
+    benefits: [
+      'Take bookings outside opening hours',
+      'One shared calendar the whole team can see',
+      'Fewer double-bookings and forgotten slots',
+      'A record of who booked what, and when',
+    ],
+    cta: 'Plan a booking platform',
+    accent: 'turquoise',
+  },
+  {
+    slug: 'custom-platforms',
+    title: 'Custom Platforms',
+    icon: Blocks,
+    summary:
+      'A product built from scratch when nothing off the shelf fits — the same way we build our own platforms.',
+    audience:
+      'Businesses and founders whose idea is the product itself, not a website about a product.',
+    problem:
+      'The thing you need does not exist as a subscription. Adapting three tools to fake it costs more every year and still leaves the important part manual.',
+    includes: [
+      'Marketplaces and directories connecting two sides',
+      'Multi-tenant platforms with separate customer accounts',
+      'Products with a public site and a private back office',
+      'Search, listings and matching logic',
+      'Roles, permissions and moderation tools',
+    ],
+    benefits: [
+      'You own the product rather than renting a compromise',
+      'Architecture that survives the second and third feature wave',
+      'Built by a team that runs its own platforms in production',
+      'A roadmap you control',
+    ],
+    cta: 'Discuss a platform',
+    accent: 'turquoise',
+  },
+  {
+    slug: 'api-integrations',
+    title: 'API & System Integrations',
+    icon: Plug,
+    summary:
+      'Make the systems you already pay for talk to each other, instead of moving data between them by hand.',
+    audience:
+      'Businesses running an accounting package, a POS, a CRM and a website that each know a different version of the truth.',
+    problem:
+      'The same order is typed into three systems. Nobody is sure which one is right, and the reconciliation happens at month end when it is too late to matter.',
+    includes: [
+      'Integrations between existing business software',
+      'Payment and messaging provider connections',
+      'APIs so your own systems can be built against',
+      'Scheduled synchronisation and import routines',
+      'Webhooks and event-driven updates',
+    ],
+    benefits: [
+      'Enter information once and have it arrive everywhere',
+      'Fewer reconciliation errors at the end of the month',
+      'Keep the tools that work and connect them properly',
+      'A documented interface for whatever comes next',
+    ],
+    cta: 'Connect my systems',
+    accent: 'cyan',
+  },
+  {
     slug: 'restaurant-websites',
     title: 'Restaurant Websites & Digital Menus',
     icon: UtensilsCrossed,
@@ -106,59 +211,8 @@ export const services: readonly Service[] = [
     accent: 'coral',
   },
   {
-    slug: 'booking-systems',
-    title: 'Booking & Appointment Systems',
-    icon: CalendarCheck,
-    summary:
-      'Let customers request appointments online, and stop losing bookings written on a notepad.',
-    audience:
-      'Clinics, salons, studios, consultants, tradespeople and anyone whose day is a schedule.',
-    problem:
-      'Bookings arrive by call, message and walk-in. Double-bookings happen, no-shows go unrecorded, and nobody can see the real picture of next week.',
-    includes: [
-      'Appointment requests submitted online',
-      'Availability displays',
-      'Service and duration selection',
-      'Customer information collection',
-      'Confirmation workflows and reminders',
-    ],
-    benefits: [
-      'Take bookings outside opening hours',
-      'One shared calendar the whole team can see',
-      'Fewer double-bookings and forgotten slots',
-      'A record of who booked what, and when',
-    ],
-    cta: 'Plan a booking platform',
-    accent: 'turquoise',
-  },
-  {
-    slug: 'management-systems',
-    title: 'Business Management Systems',
-    icon: LifeBuoy,
-    summary:
-      'Stock, clients, jobs, staff and reporting in one place, built for how your business actually operates.',
-    audience: 'Small and medium businesses whose processes do not fit an off-the-shelf product.',
-    problem:
-      'Generic software forces you to change how you work, or you bend spreadsheets until they break. Neither gives you a reliable view of the business.',
-    includes: [
-      'Client and supplier records',
-      'Stock, job or project tracking',
-      'Staff access with the right permissions per role',
-      'Document and history trails',
-      'Reports that answer your specific questions',
-    ],
-    benefits: [
-      'Software that matches your process, not the reverse',
-      'Decisions based on current numbers',
-      'Less time spent chasing information internally',
-      'A system that can grow with new requirements',
-    ],
-    cta: 'Scope a management system',
-    accent: 'cyan',
-  },
-  {
-    slug: 'redesign-maintenance',
-    title: 'Website Redesign & Maintenance',
+    slug: 'system-modernisation',
+    title: 'Existing System Modernisation',
     icon: RefreshCw,
     summary:
       'Modernise a site that still works but no longer represents you, then keep it healthy after launch.',

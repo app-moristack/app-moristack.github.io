@@ -29,6 +29,16 @@
   --color-coral-500: #ff6b45;
   --color-coral-600: #e14e2b;
 
+  /* MoriHome's amber and MoriCar's brushed silver, held at MoriStack saturation
+   * so a product card reads as its own brand without leaving the navy system. */
+  --color-home-300: #ffd97a;
+  --color-home-400: #ffc94d;
+  --color-home-500: #f5b021;
+
+  --color-auto-200: #e3ebf3;
+  --color-auto-300: #c3d2e0;
+  --color-auto-400: #94a9bf;
+
   --color-ink-50: #f2f8fc;
   --color-ink-100: #e9f3fa;
   --color-ink-300: #b7cddd;
@@ -329,5 +339,93 @@
     font-weight: 600;
     color: var(--color-ink-300);
     background: color-mix(in oklab, var(--color-navy-800) 55%, transparent);
+  }
+}
+
+@layer components {
+  /*
+   * Product card ground. --ms-brand is set per card so one rule serves every
+   * platform in the ecosystem; it falls back to the MoriStack turquoise.
+   */
+  .ms-product {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid
+      color-mix(in oklab, var(--ms-brand, var(--color-turquoise-500)) 20%, transparent);
+    border-radius: var(--radius-panel);
+    background:
+      radial-gradient(
+        ellipse 90% 70% at 85% 0%,
+        color-mix(in oklab, var(--ms-brand, var(--color-turquoise-500)) 11%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(
+        155deg,
+        color-mix(in oklab, var(--color-navy-800) 88%, transparent),
+        color-mix(in oklab, var(--color-navy-950) 94%, transparent)
+      );
+    transition:
+      border-color 400ms var(--ease-out-soft),
+      transform 400ms var(--ease-out-soft);
+  }
+
+  @media (hover: hover) {
+    .ms-product:hover {
+      border-color: color-mix(
+        in oklab,
+        var(--ms-brand, var(--color-turquoise-500)) 42%,
+        transparent
+      );
+      transform: translateY(-3px);
+    }
+  }
+
+  /* Hairline that picks up the card's own brand rather than the site accent. */
+  .ms-product-rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--ms-brand, var(--color-turquoise-500)) 55%, transparent),
+      transparent
+    );
+  }
+
+  /*
+   * Ecosystem map edge. The dash pattern is animated rather than the geometry,
+   * so a dozen connections stay on the compositor instead of re-laying out.
+   */
+  .ms-edge {
+    stroke-dasharray: 3 9;
+    animation: ms-edge-flow 2.6s linear infinite;
+  }
+
+  @keyframes ms-edge-flow {
+    to {
+      stroke-dashoffset: -12;
+    }
+  }
+
+  .ms-node-halo {
+    animation: ms-node-breathe 4.5s var(--ease-out-soft) infinite;
+  }
+
+  @keyframes ms-node-breathe {
+    0%,
+    100% {
+      opacity: 0.25;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.12);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ms-edge,
+    .ms-node-halo {
+      animation: none;
+    }
   }
 }

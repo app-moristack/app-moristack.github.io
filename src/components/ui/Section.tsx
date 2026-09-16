@@ -45,12 +45,15 @@ export function SectionHeading({
   intro,
   id,
   align = 'center',
+  as: Heading = 'h2',
 }: {
   readonly eyebrow?: string
   readonly title: ReactNode
   readonly intro?: ReactNode
   readonly id?: string
   readonly align?: 'center' | 'left'
+  /** A section that opens a page carries its h1; everywhere else stays an h2. */
+  readonly as?: 'h1' | 'h2'
 }) {
   return (
     <Reveal
@@ -60,9 +63,12 @@ export function SectionHeading({
       )}
     >
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <h2 id={id} className={cn('text-section font-extrabold text-balance', eyebrow && 'mt-5')}>
+      <Heading
+        id={id}
+        className={cn('text-section font-extrabold text-balance', eyebrow && 'mt-5')}
+      >
         {title}
-      </h2>
+      </Heading>
       {intro ? <p className="mt-5 text-lead text-ink-400">{intro}</p> : null}
     </Reveal>
   )

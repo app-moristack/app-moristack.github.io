@@ -34,32 +34,30 @@ export function Hero() {
         <motion.div style={{ y: contentY, opacity: contentOpacity }}>
           <Stagger stagger={0.09}>
             <StaggerItem>
-              <p className="ms-rule-label max-w-xs">Web studio &middot; Mauritius</p>
+              <p className="ms-rule-label max-w-xs">Mauritius-built technology</p>
             </StaggerItem>
 
-            <h1 className="mt-7 max-w-[14ch] text-hero font-extrabold lg:max-w-[13ch]">
+            <h1 className="mt-7 max-w-[15ch] text-hero font-extrabold lg:max-w-[14ch]">
               <RevealLines delayChildren={0.08}>
-                <RevealLine>
-                  <span className="ms-serif text-turquoise-400">Digital</span> experiences,
-                </RevealLine>
-                <RevealLine>
-                  engineered in <span className="ms-marker">Mauritius</span>.
+                <RevealLine>Building a more</RevealLine>
+                <RevealLine className="text-turquoise-400">
+                  <span className="ms-serif">connected</span> Mauritius.
                 </RevealLine>
               </RevealLines>
             </h1>
 
             <StaggerItem>
-              <p className="mt-7 max-w-lg text-lead text-ink-300">
-                {siteConfig.businessName} builds fast, modern websites and custom web apps for
-                businesses in Mauritius &mdash; designed to turn visitors into customers, not just
-                to look busy.
+              <p className="mt-7 max-w-xl text-lead text-ink-300">
+                {siteConfig.businessName} builds digital platforms that connect people, businesses
+                and services across Mauritius &mdash; alongside custom technology for companies
+                ready to grow.
               </p>
             </StaggerItem>
 
             <StaggerItem className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Magnetic className="max-sm:w-full">
-                <ButtonLink to="/contact" size="lg" className="group max-sm:w-full">
-                  Request a Free Quote
+                <ButtonLink to="/#ecosystem" size="lg" className="group max-sm:w-full">
+                  Explore our ecosystem
                   <ArrowRight
                     size={17}
                     aria-hidden="true"
@@ -68,8 +66,8 @@ export function Hero() {
                 </ButtonLink>
               </Magnetic>
               <Magnetic strength={0.22} className="max-sm:w-full">
-                <ButtonLink to="/work" size="lg" variant="secondary" className="max-sm:w-full">
-                  See how we build
+                <ButtonLink to="/contact" size="lg" variant="secondary" className="max-sm:w-full">
+                  Build with {siteConfig.businessName}
                 </ButtonLink>
               </Magnetic>
             </StaggerItem>
@@ -77,7 +75,7 @@ export function Hero() {
             <StaggerItem>
               <p className="mt-6 inline-flex items-center gap-1.5 text-sm text-ink-400">
                 <MapPin size={14} aria-hidden="true" className="text-turquoise-500" />
-                Based in {siteConfig.location} &mdash; {siteConfig.responseTime}
+                Built in {siteConfig.location} &mdash; {siteConfig.responseTime}
               </p>
             </StaggerItem>
           </Stagger>

@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { ConnectionField } from './ConnectionField'
+import { EcosystemField } from './EcosystemField'
 import { LeMorne } from './LeMorne'
 
 const TURQUOISE = '#22e5ae'
@@ -32,7 +32,7 @@ export default function HeroScene({
       <directionalLight position={[-5, 0.5, -2]} intensity={0.55} color={CORAL} />
       <group position={[offsetX, 0, 0]}>
         <LeMorne animate={animate} scale={scale} />
-        <ConnectionField scale={scale} />
+        <EcosystemField scale={scale} animate={animate} />
       </group>
     </Canvas>
   )

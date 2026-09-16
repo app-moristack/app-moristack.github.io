@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { absoluteUrl, assetUrl, mailtoLink, siteConfig } from './site.config'
 import { services } from './services'
-import { projectCategories, projects } from './projects'
+import { clientProjects, moristackProducts, projectCategories } from './projects'
+import { ecosystemProducts } from './ecosystem'
 
 describe('site configuration', () => {
   it('carries the known business details', () => {
@@ -12,12 +13,21 @@ describe('site configuration', () => {
 
   it('exposes every navigation destination the header renders', () => {
     expect(siteConfig.nav.map((link) => link.to)).toEqual([
-      '/',
+      '/#ecosystem',
       '/services',
       '/work',
       '/about',
       '/contact',
     ])
+  })
+
+  it('points every navigation child at a route the app serves', () => {
+    const routes = ['/', '/services', '/work', '/about', '/contact', '/privacy']
+    for (const link of siteConfig.nav) {
+      for (const child of link.children ?? []) {
+        expect(routes).toContain(child.to.split('#')[0])
+      }
+    }
   })
 
   it('invents no social media URLs', () => {
@@ -52,9 +62,9 @@ describe('site configuration', () => {
 })
 
 describe('content data', () => {
-  it('defines six services with unique slugs', () => {
-    expect(services).toHaveLength(6)
-    expect(new Set(services.map((service) => service.slug)).size).toBe(6)
+  it('defines eight services with unique slugs', () => {
+    expect(services).toHaveLength(8)
+    expect(new Set(services.map((service) => service.slug)).size).toBe(8)
   })
 
   it('gives every service the copy the services page renders', () => {
@@ -66,11 +76,26 @@ describe('content data', () => {
     }
   })
 
-  it('marks every project as a concept rather than a client engagement', () => {
-    expect(projects.length).toBeGreaterThan(0)
-    for (const project of projects) {
+  it('marks every client project as a concept rather than a real engagement', () => {
+    expect(clientProjects.length).toBeGreaterThan(0)
+    for (const project of clientProjects) {
       expect(project.status).toBe('Concept')
       expect(projectCategories).toContain(project.category)
+    }
+  })
+
+  it('separates MoriStack products from client work', () => {
+    expect(moristackProducts.map((project) => project.slug)).toEqual(['morihome', 'moricar'])
+    expect(moristackProducts).toHaveLength(ecosystemProducts.length)
+    for (const project of moristackProducts) {
+      expect(project.kind).toBe('product')
+    }
+    expect(clientProjects.every((project) => project.kind === 'client')).toBe(true)
+  })
+
+  it('claims no live URL for a platform that is still in development', () => {
+    for (const product of ecosystemProducts) {
+      expect(product.url === null || product.url.startsWith('https://')).toBe(true)
     }
   })
 })

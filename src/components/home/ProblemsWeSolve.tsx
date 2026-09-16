@@ -13,13 +13,13 @@ export function ProblemsWeSolve() {
     <Section labelledBy="problems-heading" className="relative">
       <SectionHeading
         id="problems-heading"
-        eyebrow="The problem"
+        eyebrow="Business systems"
         title={
           <>
-            Still managing your business <span className="ms-serif text-coral-400">by hand</span>?
+            Your business deserves <span className="ms-serif text-coral-400">better</span> tools.
           </>
         }
-        intro="Spreadsheets, paperwork and scattered messages work until they do not. We turn them into one clear, centralised system your whole team can rely on."
+        intro="From spreadsheets and WhatsApp workflows to disconnected software, many Mauritian businesses still lose time on repetitive processes. We build systems that bring those operations together."
       />
 
       <div className="grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
@@ -99,7 +99,11 @@ export function ProblemsWeSolve() {
 
       <Stagger as="ul" stagger={0.06} className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {problemBenefits.map((benefit) => (
-          <StaggerItem as="li" key={benefit.title} className="ms-panel p-5 transition-[transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-turquoise-500/30">
+          <StaggerItem
+            as="li"
+            key={benefit.title}
+            className="ms-panel p-5 transition-[transform,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-turquoise-500/30"
+          >
             <div>
               <benefit.icon size={19} aria-hidden="true" className="text-turquoise-400" />
               <h3 className="mt-3.5 text-sm font-bold text-ink-50">{benefit.title}</h3>

@@ -32,7 +32,13 @@ const damp = (current: number, target: number, lambda: number, dt: number) =>
  * Le Morne Brabant as a digital topographic model. The build-in runs
  * contours -> wireframe -> solid fill, so the massif draws itself on load.
  */
-export function LeMorne({ animate, scale = 1 }: { readonly animate: boolean; readonly scale?: number }) {
+export function LeMorne({
+  animate,
+  scale = 1,
+}: {
+  readonly animate: boolean
+  readonly scale?: number
+}) {
   const outer = useRef<Group>(null)
   const inner = useRef<Group>(null)
   const surface = useRef<MeshStandardMaterial>(null)

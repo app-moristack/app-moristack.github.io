@@ -6,11 +6,22 @@ export type SocialLink = {
   readonly icon: 'facebook' | 'instagram' | 'linkedin' | 'github' | 'whatsapp'
 }
 
-export type NavLink = { readonly label: string; readonly to: string }
+export type NavChild = {
+  readonly label: string
+  readonly to: string
+  readonly description: string
+}
+
+export type NavLink = {
+  readonly label: string
+  readonly to: string
+  readonly children?: readonly NavChild[]
+}
 
 export type SiteConfig = {
   readonly businessName: string
   readonly tagline: string
+  readonly mission: string
   readonly email: string
   readonly phone: string | null
   readonly whatsappNumber: string | null
@@ -47,7 +58,9 @@ const resolvedEndpoint = rawEndpoint || (resolvedAccessKey ? WEB3FORMS_ENDPOINT 
 
 export const siteConfig: SiteConfig = {
   businessName: 'MoriStack',
-  tagline: 'Websites & web apps built for growth',
+  tagline: 'Building a more connected Mauritius',
+  mission:
+    'MoriStack builds digital platforms that connect people, businesses and services across Mauritius — alongside custom technology for companies ready to grow.',
   email: 'moristack@gmail.com',
   // TODO: set VITE_PHONE (international format, e.g. +230 5xxx xxxx) once a public number exists.
   phone: rawPhone || null,
@@ -59,15 +72,60 @@ export const siteConfig: SiteConfig = {
   responseTime: 'We reply to every enquiry within 1 business day.',
   socials: [
     // TODO: fill in the real profile URLs. Entries with a null url are hidden.
-    { label: 'Facebook', url: null, icon: 'facebook' },
     { label: 'Instagram', url: null, icon: 'instagram' },
+    { label: 'Facebook', url: null, icon: 'facebook' },
     { label: 'LinkedIn', url: null, icon: 'linkedin' },
     { label: 'GitHub', url: null, icon: 'github' },
   ],
   nav: [
-    { label: 'Home', to: '/' },
-    { label: 'Services', to: '/services' },
-    { label: 'Our Work', to: '/work' },
+    {
+      label: 'Ecosystem',
+      to: '/#ecosystem',
+      children: [
+        {
+          label: 'Explore the ecosystem',
+          to: '/#ecosystem',
+          description: 'How the platforms connect',
+        },
+        {
+          label: 'MoriHome',
+          to: '/#morihome',
+          description: 'Construction, renovation and home services',
+        },
+        {
+          label: 'MoriCar',
+          to: '/#moricar',
+          description: 'Cars, showrooms and automotive services',
+        },
+      ],
+    },
+    {
+      label: 'Solutions',
+      to: '/services',
+      children: [
+        {
+          label: 'Websites',
+          to: '/services#business-websites',
+          description: 'Company and service websites',
+        },
+        {
+          label: 'Web applications',
+          to: '/services#web-applications',
+          description: 'Portals, dashboards and tools',
+        },
+        {
+          label: 'Business systems',
+          to: '/services#management-systems',
+          description: 'Operations in one place',
+        },
+        {
+          label: 'Custom development',
+          to: '/services#custom-platforms',
+          description: 'Platforms built from scratch',
+        },
+      ],
+    },
+    { label: 'Projects', to: '/work' },
     { label: 'About', to: '/about' },
     { label: 'Contact', to: '/contact' },
   ],
