@@ -52,9 +52,9 @@ export default function MoriStackPage() {
             Mauritius
           </h1>
           <p className="launcher-intro">
-            Digital solutions and platforms
+            Find your home. Get moving. Live well.
             <br />
-            for a brighter tomorrow.
+            Everyday connections, made simpler.
           </p>
           <div className="launcher-landscape" aria-hidden="true">
             <img
