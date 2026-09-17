@@ -222,11 +222,6 @@ export const technologies: readonly Technology[] = [
     body: 'A proven database that keeps records consistent and reports quick as data grows.',
   },
   {
-    name: 'PostgreSQL',
-    icon: Database,
-    body: 'Chosen when the data model is complex enough to deserve a stricter engine.',
-  },
-  {
     name: 'Redis',
     icon: Zap,
     body: 'Caching and queues, so heavy work happens in the background and pages stay fast.',

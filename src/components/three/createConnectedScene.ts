@@ -118,7 +118,7 @@ export async function createConnectedScene(
     powerPreference: 'low-power',
   })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5))
-  renderer.setClearColor('#03111d', 1)
+  renderer.setClearColor('#03111d', 0)
   renderer.outputColorSpace = THREE.SRGBColorSpace
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(38, 1, 0.00005, 80)
@@ -291,10 +291,13 @@ export async function createConnectedScene(
             transparent: true,
             opacity: 0,
             depthTest: false,
+            depthWrite: false,
           }),
         ),
       )
       sprite.position.set(x, y, elevation(x, y) + 0.26)
+      // Keep person markers above the coastline and connection paths.
+      sprite.renderOrder = 10
       island.add(sprite)
       const ring = new THREE.Mesh(
         geometry(new THREE.RingGeometry(0.085, 0.095, 40)),

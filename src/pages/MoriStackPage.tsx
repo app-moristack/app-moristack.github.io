@@ -35,7 +35,7 @@ export default function MoriStackPage() {
     <div ref={launcherRef} className="launcher">
       <Seo
         title="MoriStack | A More Connected Mauritius"
-        description="Your gateway to the MoriStack ecosystem. Explore MoriHome, MoriCar and MoriHealth — digital platforms for a more connected Mauritius."
+        description="Your gateway to the MoriStack ecosystem. Explore MoriHome and MoriCar — digital platforms for a more connected Mauritius."
       />
       <div className="launcher-layout">
         <ConnectedHero />
@@ -50,7 +50,7 @@ export default function MoriStackPage() {
               <LauncherCard key={app.id} app={app} index={index} />
             ))}
             <LauncherCard
-              index={3}
+              index={launcherApps.length}
               app={{
                 id: 'soon',
                 name: 'More to come.',

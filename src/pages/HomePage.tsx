@@ -5,7 +5,6 @@ import { ForBusinesses } from '@/components/home/ForBusinesses'
 import { Hero } from '@/components/home/Hero'
 import { ProblemsWeSolve } from '@/components/home/ProblemsWeSolve'
 import { ProcessTimeline } from '@/components/home/ProcessTimeline'
-import { SelectedWork } from '@/components/home/SelectedWork'
 import { Technologies } from '@/components/home/Technologies'
 import { WhyChooseUs } from '@/components/home/WhyChooseUs'
 import { ServiceRow } from '@/components/ui/ServiceRow'
@@ -40,7 +39,6 @@ export default function HomePage() {
       <ProblemsWeSolve />
       <WhyChooseUs />
       <ProcessTimeline />
-      <SelectedWork />
       <Technologies />
       <CallToAction />
     </>

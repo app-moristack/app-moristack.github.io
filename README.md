@@ -19,14 +19,14 @@ npm run dev               # http://localhost:5173
 
 ### Responsive ecosystem launcher
 
-The root route renders the MoriStack launcher at widths up to 767px and the existing
-homepage on larger screens. Explicit routes work at every width: `/#/home` opens
+The root route renders the MoriStack launcher on both mobile and desktop.
+Explicit routes work at every width: `/#/home` opens
 the preserved homepage and `/#/moristack` opens the launcher. Existing root section
 links continue to open their original homepage sections, including on mobile.
 
-The launcher arrows link to `https://morihom.duckdns.org`,
-`https://moricar.duckdns.org`, and `https://mauricare.mu`. Override these defaults
-with `VITE_MORIHOME_URL`, `VITE_MORICAR_URL`, and `VITE_MORIHEALTH_URL` in `.env`
+The launcher arrows link to `https://morihom.duckdns.org` and
+`https://moricar.duckdns.org`. Override these defaults
+with `VITE_MORIHOME_URL` and `VITE_MORICAR_URL` in `.env`
 (or GitHub repository variables for deployment). Empty values use the defaults.
 The launcher artwork is optimized WebP;
 its depth and motion effects use CSS and respect reduced-motion preferences.
@@ -152,7 +152,7 @@ ordinary application changes deploy automatically. The previous image remains ta
 `docker compose -f compose.production.yaml up -d --no-build --wait` on the server.
 
 Ecosystem URLs: MoriHome https://morihom.duckdns.org, MoriCar
-https://moricar.duckdns.org, MoriHealth https://mauricare.mu.
+https://moricar.duckdns.org.
 
 ## GitHub Pages mirror
 

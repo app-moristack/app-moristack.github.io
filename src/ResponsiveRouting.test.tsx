@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router'
 import userEvent from '@testing-library/user-event'
 import { App } from './App'
-import { MOBILE_QUERY } from './hooks/usePageIdentity'
+const MOBILE_QUERY = '(max-width: 767px)'
 
 function mockViewport(initialMobile: boolean) {
   let mobile = initialMobile
@@ -39,7 +39,7 @@ const heading = (launcher: boolean) =>
 describe('responsive landing and explicit pages', () => {
   it.each([
     [true, '/', true],
-    [false, '/', false],
+    [false, '/', true],
     [true, '/home', false],
     [false, '/home', false],
     [true, '/moristack', true],
@@ -67,10 +67,10 @@ describe('responsive landing and explicit pages', () => {
     },
   )
 
-  it('updates the root page and active link when the viewport crosses the breakpoint', async () => {
+  it('keeps the MoriStack page and active link when the viewport crosses the breakpoint', async () => {
     const resize = mockViewport(false)
     renderRoute('/')
-    await screen.findByRole('heading', { level: 1, name: heading(false) })
+    await screen.findByRole('heading', { level: 1, name: heading(true) })
     resize(true)
     await screen.findByRole('heading', { level: 1, name: heading(true) })
     expect(
@@ -79,7 +79,7 @@ describe('responsive landing and explicit pages', () => {
       }),
     ).toHaveAttribute('aria-current', 'page')
     resize(false)
-    await screen.findByRole('heading', { level: 1, name: heading(false) })
+    await screen.findByRole('heading', { level: 1, name: heading(true) })
   })
 
   it('keeps existing homepage section links working on mobile', async () => {

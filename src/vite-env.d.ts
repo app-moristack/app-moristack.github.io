@@ -9,7 +9,6 @@ interface ImportMetaEnv {
   readonly VITE_PHONE?: string
   readonly VITE_MORIHOME_URL?: string
   readonly VITE_MORICAR_URL?: string
-  readonly VITE_MORIHEALTH_URL?: string
 }
 
 interface ImportMeta {

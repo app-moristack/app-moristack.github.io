@@ -14,12 +14,12 @@ const renderRoute = (path: string) =>
   )
 
 describe('routing', () => {
-  it('renders the home page at the index route', async () => {
+  it('renders the MoriStack page at the index route', async () => {
     renderRoute('/')
     expect(
       await screen.findByRole(
         'heading',
-        { level: 1, name: /Building a more connected Mauritius/i },
+        { level: 1, name: /A More\s*Connected\s*Mauritius/i },
         LAZY_ROUTE,
       ),
     ).toBeInTheDocument()
@@ -58,7 +58,7 @@ describe('routing', () => {
   })
 
   it('shows the current year in the footer copyright', async () => {
-    renderRoute('/')
+    renderRoute('/home')
     const year = String(new Date().getFullYear())
     await waitFor(() =>
       expect(screen.getByText(new RegExp(`${year} MoriStack`))).toBeInTheDocument(),

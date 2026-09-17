@@ -31,14 +31,4 @@ export const launcherApps = [
     description:
       'Your next car. Your next journey. Buy, sell, rent a car or earn by renting out yours. Find maintenance services to keep you moving.',
   },
-  {
-    id: 'morihealth',
-    name: 'MoriHealth',
-    tagline: 'Care for a brighter tomorrow.',
-    category: 'Care & connection',
-    image: 'care',
-    color: '#74efb2',
-    url: appUrl(import.meta.env.VITE_MORIHEALTH_URL?.trim() || 'https://mauricare.mu'),
-    description: 'A future platform for connecting people with care and support.',
-  },
 ] as const

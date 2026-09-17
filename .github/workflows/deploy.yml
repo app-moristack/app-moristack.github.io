@@ -54,7 +54,6 @@ jobs:
           VITE_PHONE: ${{ vars.VITE_PHONE }}
           VITE_MORIHOME_URL: ${{ vars.VITE_MORIHOME_URL }}
           VITE_MORICAR_URL: ${{ vars.VITE_MORICAR_URL }}
-          VITE_MORIHEALTH_URL: ${{ vars.VITE_MORIHEALTH_URL }}
 
       - name: Verify build output
         run: |

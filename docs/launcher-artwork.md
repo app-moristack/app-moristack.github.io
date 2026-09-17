@@ -2,7 +2,7 @@
 
 Generated with the built-in image-generation tool, then resized and compressed
 with Sharp. Originals remain in the local generated-images directory. The app
-uses `public/launcher/le-morne.webp`, `home.webp`, `car.webp`, and `care.webp`.
+uses `public/launcher/le-morne.webp`, `home.webp`, and `car.webp`.
 All labels, navigation, card surfaces, lighting overlays, and interactions are
 implemented in HTML/CSS/React. The artwork is raster-rendered 3D, with CSS depth
 and animation; this page does not load WebGL.
@@ -19,4 +19,3 @@ Use case: stylized-concept. A premium 3D miniature diorama for a futuristic mobi
 
 - **Home subject:** A beautiful contemporary tropical two-story villa with warm amber-lit windows, palm trees, lush foliage, a glowing amber outline of a house floating above its roof
 - **Car subject:** A glossy red luxury sports coupe, front three-quarter view, elegant futuristic red neon circular halo behind it, polished dark reflective floor
-- **Care subject:** Two kind healthcare professionals in elegant teal scrubs alongside a seated elderly person, miniature tropical foliage, a luminous mint green heart floating above them
